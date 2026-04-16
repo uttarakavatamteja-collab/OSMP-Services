@@ -91,7 +91,7 @@ export default function UserDashboard() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="space-y-1">
               <h1 className="text-3xl font-extrabold tracking-tight">Overview</h1>
-              <p className="text-muted-foreground">Welcome back, John! Here's what's happening today.</p>
+              <p className="text-muted-foreground">Welcome back, John! Here&apos;s what&apos;s happening today.</p>
             </div>
             <div className="flex items-center gap-3">
                <Button variant="outline" size="icon" className="rounded-full relative">

@@ -39,7 +39,7 @@ export const ServiceDescription = () => {
           <div className="space-y-1">
             <h4 className="font-bold">OMSP Happiness Guarantee</h4>
             <p className="text-sm text-muted-foreground">
-              Not satisfied with the service? We'll send someone back to fix it for free, or give you a full refund.
+              Not satisfied with the service? We&apos;ll send someone back to fix it for free, or give you a full refund.
             </p>
           </div>
         </div>

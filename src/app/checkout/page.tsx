@@ -7,6 +7,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -84,7 +85,7 @@ export default function CheckoutPage() {
                       <div className="space-y-4">
                         <div className="flex gap-3">
                            <div className="h-16 w-16 rounded-lg bg-muted relative overflow-hidden shrink-0">
-                               <img src="/cleaning.png" alt="Svc" className="object-cover h-full w-full" />
+                               <Image src="/cleaning.png" alt="Svc" fill className="object-cover" />
                            </div>
                            <div className="space-y-1">
                               <h4 className="text-sm font-bold line-clamp-1">Whole Home Deep Cleaning</h4>

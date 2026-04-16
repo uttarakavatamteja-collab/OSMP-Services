@@ -188,7 +188,7 @@ export default function VendorDashboard() {
                               <span className="text-[10px] font-bold text-muted-foreground uppercase">2h ago</span>
                            </div>
                            <p className="text-xs text-muted-foreground leading-relaxed italic">
-                             "Great service! Sarah was professional and did an amazing job with the kitchen cleaning."
+                             &quot;Great service! Sarah was professional and did an amazing job with the kitchen cleaning.&quot;
                            </p>
                         </div>
                       ))}

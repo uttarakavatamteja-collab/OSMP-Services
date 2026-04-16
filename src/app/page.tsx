@@ -15,9 +15,9 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-slate-50 dark:bg-slate-950/50">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold tracking-tight mb-4">What Our Customers Say</h2>
-          <p className="text-muted-foreground mb-12">Don't take our word for it, hear from our happy users.</p>
+          <p className="text-muted-foreground mb-12">Don&apos;t take our word for it, hear from our happy users.</p>
           <div className="flex flex-wrap justify-center gap-8 italic text-lg opacity-70">
-            "Best appliance service I've ever used. The professional was on time and very knowledgeable."
+            &quot;Best appliance service I&apos;ve ever used. The professional was on time and very knowledgeable.&quot;
           </div>
         </div>
       </section>
@@ -27,6 +27,7 @@ export default function Home() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-12 text-center md:text-left">
           <div className="space-y-6 max-w-xl">
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight">Experience OMSP on the go</h2>
+            <p className="text-xs text-white/80">Responding within 5 minutes increases your booking chances by 40%.</p>
             <p className="text-white/80 text-lg">
               Download our mobile app to book services effortlessly, track professionals in real-time, and get exclusive offers.
             </p>
