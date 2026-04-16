@@ -1,9 +1,10 @@
 "use client";
 
 import { Calendar, Clock, MapPin, ChevronRight, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const StickyBookingPanel = () => {
   return (
@@ -55,11 +56,12 @@ export const StickyBookingPanel = () => {
             </div>
           </div>
 
-          <Button asChild className="w-full h-14 rounded-xl gradient-primary text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
-            <Link href="/checkout">
-              Proceed to Booking
-            </Link>
-          </Button>
+          <Link 
+            href="/checkout"
+            className={cn(buttonVariants(), "w-full h-14 rounded-xl gradient-primary text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform")}
+          >
+            Proceed to Booking
+          </Link>
 
           <p className="text-[10px] text-center text-muted-foreground px-4">
             Free cancellation up to 24 hours before the service starts.

@@ -64,22 +64,22 @@ export const Navbar = () => {
             </span>
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <Button variant="ghost" size="icon" className="rounded-full">
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard">Dashboard</Link>
+              <DropdownMenuItem>
+                <Link href="/dashboard" className="w-full">Dashboard</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/bookings">My Bookings</Link>
+              <DropdownMenuItem>
+                <Link href="/bookings" className="w-full">My Bookings</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/profile">Profile</Link>
+              <DropdownMenuItem>
+                <Link href="/profile" className="w-full">Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="text-destructive">
+              <DropdownMenuItem variant="destructive">
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>

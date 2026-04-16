@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { 
   Calendar, Clock, MapPin, User, Settings, 
   CreditCard, LogOut, ChevronRight, CheckCircle2,
-  Clock3, Package, Bell
+  Clock3, Package, Bell, Star
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

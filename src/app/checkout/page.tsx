@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, Calendar, MapPin, CreditCard, ShoppingBag, ArrowLeft, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 const steps = ["Service", "Schedule", "Address", "Payment"];
 
@@ -25,11 +26,12 @@ export default function CheckoutPage() {
           {/* Header & Steps */}
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div className="flex items-center gap-4">
-               <Button variant="ghost" size="icon" asChild className="rounded-full">
-                  <Link href="/services/1">
-                    <ArrowLeft className="h-5 w-5" />
-                  </Link>
-               </Button>
+               <Link 
+                 href="/services/1"
+                 className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "rounded-full")}
+               >
+                 <ArrowLeft className="h-5 w-5" />
+               </Link>
                <h1 className="text-2xl font-bold tracking-tight">Booking Checkout</h1>
             </div>
             

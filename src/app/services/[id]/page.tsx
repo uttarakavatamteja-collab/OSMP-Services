@@ -6,7 +6,8 @@ import { StickyBookingPanel } from "@/components/features/services/StickyBooking
 import { motion } from "framer-motion";
 import { ArrowLeft, Share2, Heart, Star } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function ServiceDetailPage({ params }: { params: { id: string } }) {
   return (
@@ -25,11 +26,12 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
         {/* Actions Over Banner */}
         <div className="container relative mx-auto h-full px-4 pt-6 md:px-8">
           <div className="flex items-center justify-between text-white">
-            <Button variant="ghost" size="icon" asChild className="rounded-full bg-black/20 backdrop-blur-md hover:bg-black/40">
-              <Link href="/services">
-                <ArrowLeft className="h-5 w-5" />
-              </Link>
-            </Button>
+            <Link 
+              href="/services" 
+              className={cn(buttonVariants({ variant: "ghost", size: "icon" }), "rounded-full bg-black/20 backdrop-blur-md hover:bg-black/40")}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Link>
             <div className="flex gap-2">
               <Button variant="ghost" size="icon" className="rounded-full bg-black/20 backdrop-blur-md hover:bg-black/40">
                 <Share2 className="h-5 w-5" />

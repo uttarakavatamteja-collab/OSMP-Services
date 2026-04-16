@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { Star, Clock, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ServiceCardProps {
   id: string;
@@ -68,11 +69,12 @@ export const ServiceCard = ({
             <span className="text-[10px] text-muted-foreground uppercase font-bold">Starts from</span>
             <span className="text-lg font-bold">${price}</span>
           </div>
-          <Button asChild size="sm" className="rounded-lg gradient-primary font-bold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
-            <Link href={`/services/${id}`}>
-              Book Now
-            </Link>
-          </Button>
+          <Link 
+            href={`/services/${id}`}
+            className={cn(buttonVariants({ size: "sm" }), "rounded-lg gradient-primary font-bold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all")}
+          >
+            Book Now
+          </Link>
         </div>
       </div>
     </motion.div>
