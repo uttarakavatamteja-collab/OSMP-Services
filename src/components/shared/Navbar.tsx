@@ -31,9 +31,9 @@ export const Navbar = () => {
           <div className="flex h-10 items-center gap-2 rounded-full border bg-muted/50 px-4 transition-all focus-within:ring-2 focus-within:ring-primary/20">
             <MapPin className="h-4 w-4 text-muted-foreground" />
             <select className="bg-transparent text-sm focus:outline-none outline-none border-none cursor-pointer">
-              <option>New York, NY</option>
-              <option>London, UK</option>
-              <option>Mumbai, IN</option>
+              <option>Bangalore, IN</option>
+              <option>Hyderabad, IN</option>
+              <option>Chennai, IN</option>
             </select>
             <div className="h-4 w-px bg-border" />
             <Search className="h-4 w-4 text-muted-foreground" />
@@ -64,10 +64,10 @@ export const Navbar = () => {
             </span>
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <User className="h-5 w-5" />
-              </Button>
+            <DropdownMenuTrigger 
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 active:translate-y-px [&_svg]:size-5 shadow-sm"
+            >
+              <User />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
               <DropdownMenuItem>

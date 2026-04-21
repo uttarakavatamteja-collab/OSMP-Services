@@ -1,91 +1,102 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Search, MapPin, Sparkles } from "lucide-react";
+import { Search, MapPin, Sparkles, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-20 lg:py-32 dark:bg-slate-950">
-      {/* Background Blobs */}
-      <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 blur-3xl opacity-20">
-        <div className="h-96 w-96 rounded-full bg-primary" />
-      </div>
-      <div className="absolute bottom-0 left-0 translate-y-12 -translate-x-12 blur-3xl opacity-20">
-        <div className="h-96 w-96 rounded-full bg-purple-600" />
+    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-900 py-20 lg:py-32">
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/hero-bg.jpg"
+          alt="Modern Home Interior"
+          fill
+          className="object-cover opacity-40 grayscale-[0.2]"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
       </div>
 
-      <div className="container relative mx-auto px-4 text-center">
+      <div className="container relative z-10 mx-auto px-4 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-3xl space-y-8"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="mx-auto max-w-4xl space-y-8"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border bg-white/50 backdrop-blur-sm px-4 py-1.5 text-sm font-medium dark:bg-black/50">
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md px-4 py-1.5 text-sm font-medium text-white shadow-2xl">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span>Trusted by 50,000+ happy customers</span>
+            <span>Trusted by 50,000+ Indian households</span>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
-            Your Trusted Home & <br />
-            <span className="text-gradient">Professional Services</span>
+          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-8xl">
+            Reliable Services <br />
+            <span className="text-gradient">At Your Doorstep</span>
           </h1>
 
-          <p className="mx-auto max-w-xl text-lg text-muted-foreground sm:text-xl leading-relaxed">
-            From deep cleaning to expert repairs, book top-rated professionals for all your needs in seconds.
+          <p className="mx-auto max-w-2xl text-lg text-slate-300 sm:text-xl leading-relaxed">
+            From deep cleaning to expert repairs, book top-rated professionals for all your needs in seconds. <br className="hidden md:block" />
+            <span className="font-semibold text-primary">Starting at just ₹149.</span>
           </p>
 
           {/* Hero Search (Mobile) */}
           <div className="mx-auto max-w-2xl space-y-4 md:hidden">
             <div className="space-y-2">
-              <div className="flex h-12 items-center gap-3 rounded-xl border bg-background px-4">
-                <MapPin className="h-5 w-5 text-muted-foreground" />
-                <input placeholder="Current location..." className="flex-1 bg-transparent text-sm focus:outline-none" />
+              <div className="flex h-14 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-4 text-white">
+                <MapPin className="h-5 w-5 text-primary" />
+                <input placeholder="Select city..." className="flex-1 bg-transparent text-sm focus:outline-none placeholder:text-slate-400" />
               </div>
-              <div className="flex h-12 items-center gap-3 rounded-xl border bg-background px-4">
-                <Search className="h-5 w-5 text-muted-foreground" />
-                <input placeholder="Search for 'AC Repair'..." className="flex-1 bg-transparent text-sm focus:outline-none" />
+              <div className="flex h-14 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-4 text-white">
+                <Search className="h-5 w-5 text-primary" />
+                <input placeholder="What service do you need?" className="flex-1 bg-transparent text-sm focus:outline-none placeholder:text-slate-400" />
               </div>
             </div>
-            <Button className="w-full h-12 rounded-xl gradient-primary text-base">
+            <Button className="w-full h-14 rounded-2xl gradient-primary text-lg font-bold">
               Find Services
             </Button>
           </div>
 
           {/* Hero Search (Desktop) */}
-          <div className="hidden md:flex mx-auto max-w-3xl items-center gap-0 rounded-2xl border bg-background p-2 shadow-2xl shadow-primary/10">
-            <div className="flex flex-1 items-center gap-3 px-4">
-              <MapPin className="h-5 w-5 text-primary" />
-              <div className="flex flex-col items-start">
-                <span className="text-[10px] font-bold uppercase text-muted-foreground">Location</span>
-                <select className="bg-transparent text-sm font-semibold focus:outline-none">
-                  <option>New York, NY</option>
-                  <option>London, UK</option>
+          <div className="hidden md:flex mx-auto max-w-3xl items-center gap-0 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-t-white/10">
+            <div className="flex flex-1 items-center gap-3 px-5">
+              <MapPin className="h-6 w-6 text-primary" />
+              <div className="flex flex-col items-start min-w-[120px]">
+                <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Location</span>
+                <select className="bg-transparent text-white text-sm font-semibold focus:outline-none cursor-pointer">
+                  <option className="bg-slate-900">Hyderabad</option>
+                  <option className="bg-slate-900">chennai</option>
+                  <option className="bg-slate-900">Bangalore</option>
                 </select>
               </div>
             </div>
-            <div className="h-10 w-px bg-border" />
-            <div className="flex-[2] flex items-center gap-3 px-4">
-              <Search className="h-5 w-5 text-primary" />
+            <div className="h-10 w-px bg-white/10 mx-2" />
+            <div className="flex-[2] flex items-center gap-3 px-5 text-left">
+              <Search className="h-6 w-6 text-primary" />
               <div className="flex flex-col items-start w-full">
-                <span className="text-[10px] font-bold uppercase text-muted-foreground">Find Service</span>
-                <input 
-                  placeholder="What are you looking for?" 
-                  className="w-full bg-transparent text-sm font-semibold focus:outline-none"
+                <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Search Service</span>
+                <input
+                  placeholder="e.g. AC Repair, Cleaning..."
+                  className="w-full bg-transparent text-white text-sm font-semibold focus:outline-none placeholder:text-slate-500"
                 />
               </div>
             </div>
-            <Button size="lg" className="h-14 rounded-xl px-8 gradient-primary font-bold text-lg hover:scale-105 transition-transform">
+            <Button size="lg" className="h-16 rounded-2xl px-10 gradient-primary font-bold text-xl hover:scale-105 transition-all shadow-lg active:scale-95">
               Search
             </Button>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4 text-sm text-muted-foreground">
-            <span>Popular:</span>
-            <button className="rounded-full border bg-white px-3 py-1 hover:border-primary hover:text-primary transition-colors dark:bg-transparent">House Cleaning</button>
-            <button className="rounded-full border bg-white px-3 py-1 hover:border-primary hover:text-primary transition-colors dark:bg-transparent">AC Service</button>
-            <button className="rounded-full border bg-white px-3 py-1 hover:border-primary hover:text-primary transition-colors dark:bg-transparent">Mens Salon</button>
+          <div className="flex flex-wrap items-center justify-center gap-6 pt-8">
+            <div className="flex items-center gap-2 text-slate-400">
+              <ShieldCheck className="h-5 w-5 text-emerald-500" />
+              <span className="text-sm font-medium italic">100% Quality Assurance</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-400">
+              <Sparkles className="h-5 w-5 text-amber-500" />
+              <span className="text-sm font-medium italic">Verified Professionals</span>
+            </div>
           </div>
         </motion.div>
       </div>

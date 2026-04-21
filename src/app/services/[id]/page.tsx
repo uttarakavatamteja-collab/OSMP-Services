@@ -15,7 +15,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
       {/* Banner & Gallery */}
       <section className="relative h-[40vh] md:h-[60vh] w-full overflow-hidden">
         <Image
-          src="/cleaning.png"
+          src="https://images.unsplash.com/photo-1581578731548-c64695ce6958?q=80&w=1200&auto=format&fit=crop"
           alt="Service Banner"
           fill
           className="object-cover"

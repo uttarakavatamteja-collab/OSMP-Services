@@ -1,37 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Sparkles, Wrench, Scissors, Paintbrush, 
-  Stethoscope, Tv, Bug, Truck, ChevronRight 
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-
-const categories = [
-  { name: "Cleaning", icon: Sparkles, color: "text-blue-500", bg: "bg-blue-50", href: "/services/cleaning" },
-  { name: "Repairs", icon: Wrench, color: "text-orange-500", bg: "bg-orange-50", href: "/services/repairs" },
-  { name: "Salon", icon: Scissors, color: "text-pink-500", bg: "bg-pink-50", href: "/services/salon" },
-  { name: "Painting", icon: Paintbrush, color: "text-indigo-500", bg: "bg-indigo-50", href: "/services/painting" },
-  { name: "Health", icon: Stethoscope, color: "text-emerald-500", bg: "bg-emerald-50", href: "/services/health" },
-  { name: "Appliances", icon: Tv, color: "text-red-500", bg: "bg-red-50", href: "/services/appliances" },
-  { name: "Pest Control", icon: Bug, color: "text-green-500", bg: "bg-green-50", href: "/services/pest-control" },
-  { name: "Moving", icon: Truck, color: "text-amber-500", bg: "bg-amber-50", href: "/services/moving" },
-];
+import { categories } from "@/data/landing";
 
 export const CategoryGrid = () => {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28 bg-white dark:bg-slate-950">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between mb-12">
-          <div className="space-y-1">
-            <h2 className="text-3xl font-bold tracking-tight">Explore Categories</h2>
-            <p className="text-muted-foreground">Premium services delivered at your doorstep</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Explore Categories</h2>
+            <p className="text-muted-foreground text-lg">Premium services delivered at your doorstep by trusted professionals</p>
           </div>
           <Link 
             href="/services" 
-            className="group flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            className="group flex items-center gap-2 text-sm font-bold text-primary px-6 py-2 rounded-full border border-primary/20 hover:bg-primary/5 transition-all"
           >
-            View all
+            View all categories
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -40,19 +27,19 @@ export const CategoryGrid = () => {
           {categories.map((category, index) => (
             <motion.div
               key={category.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
+              transition={{ delay: index * 0.05, duration: 0.3 }}
             >
               <Link 
                 href={category.href}
-                className="group flex flex-col items-center gap-3 rounded-2xl border bg-background p-6 transition-all hover:border-primary hover:shadow-lg hover:shadow-primary/5 dark:hover:bg-primary/5"
+                className="group flex flex-col items-center gap-4 rounded-3xl border border-slate-100 bg-slate-50/50 p-6 transition-all hover:border-primary/30 hover:bg-white hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900"
               >
-                <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${category.bg} ${category.color} transition-transform group-hover:scale-110 group-hover:rotate-3`}>
-                  <category.icon className="h-6 w-6" />
+                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${category.bg} ${category.color} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-sm`}>
+                  <category.icon className="h-8 w-8" />
                 </div>
-                <span className="text-sm font-bold tracking-tight">{category.name}</span>
+                <span className="text-sm font-bold tracking-tight text-center">{category.name}</span>
               </Link>
             </motion.div>
           ))}

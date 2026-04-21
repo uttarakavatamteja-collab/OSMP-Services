@@ -100,13 +100,13 @@ export const PricingPackages = () => {
           <TabsTrigger value="premium" className="rounded-lg data-[state=active]:gradient-primary data-[state=active]:text-white">Premium</TabsTrigger>
         </TabsList>
         <TabsContent value="basic" className="pt-4">
-          <PackageCard price="49" title="Essentials Clean" features={["2 Cleaners", "2 Hours", "Standard Chemicals"]} />
+          <PackageCard price="149" title="Essentials Clean" features={["2 Cleaners", "2 Hours", "Standard Chemicals"]} />
         </TabsContent>
         <TabsContent value="standard" className="pt-4">
-          <PackageCard price="89" title="Whole Home Clean" features={["3 Cleaners", "4 Hours", "Premium Chemicals", "Kitchen Deep Clean"]} isPopular />
+          <PackageCard price="299" title="Whole Home Clean" features={["3 Cleaners", "4 Hours", "Premium Chemicals", "Kitchen Deep Clean"]} isPopular />
         </TabsContent>
         <TabsContent value="premium" className="pt-4">
-          <PackageCard price="149" title="VIP Deep Clean" features={["4 Cleaners", "6 Hours", "Eco-friendly specialized", "Kitchen & Bathroom specialized", "Window Polishing"]} />
+          <PackageCard price="499" title="VIP Deep Clean" features={["4 Cleaners", "6 Hours", "Eco-friendly specialized", "Kitchen & Bathroom specialized", "Window Polishing"]} />
         </TabsContent>
       </Tabs>
     </div>
@@ -124,7 +124,7 @@ const PackageCard = ({ price, title, features, isPopular }: { price: string, tit
       <div className="space-y-1">
         <h3 className="font-bold text-lg">{title}</h3>
         <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-black">${price}</span>
+          <span className="text-3xl font-black">₹{price}</span>
           <span className="text-sm text-muted-foreground">/ one-time</span>
         </div>
       </div>

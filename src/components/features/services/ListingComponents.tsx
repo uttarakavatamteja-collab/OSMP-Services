@@ -11,7 +11,7 @@ export const ListingHeader = () => {
       <div className="container mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <h1 className="text-2xl font-bold tracking-tight">Cleaning Services</h1>
-          <p className="text-sm text-muted-foreground">124 services found in New York</p>
+          <p className="text-sm text-muted-foreground">124 services found in Bangalore</p>
         </div>
         
         <div className="flex items-center gap-3">
@@ -66,11 +66,11 @@ export const ListingSidebar = () => {
           <div className="flex items-center gap-4">
             <div className="space-y-1">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Min</span>
-              <Input type="number" placeholder="$0" className="h-9" />
+              <Input type="number" placeholder="₹0" className="h-9" />
             </div>
             <div className="space-y-1">
               <span className="text-[10px] uppercase font-bold text-muted-foreground">Max</span>
-              <Input type="number" placeholder="$500" className="h-9" />
+              <Input type="number" placeholder="₹500" className="h-9" />
             </div>
           </div>
           <Button className="w-full gradient-primary">Apply Filters</Button>
