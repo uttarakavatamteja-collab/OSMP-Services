@@ -12,7 +12,7 @@ const services = [
     price: "499",
     rating: 4.9,
     reviews: 1250,
-    image: "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.urbancompany.com/bangalore-professional-home-cleaning?srsltid=AfmBOor708T-r0JMHnVN3HghKzFJOfP4Ds5cHX71S2tEsK91tRunoxiN",
     duration: "4 hours",
     isFeatured: true
   },
@@ -53,7 +53,7 @@ const services = [
     price: "299",
     rating: 4.9,
     reviews: 190,
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800",
+    image: "https://cleanfanatics.com/blr/cleaning/carpet-cleaning-services-bangalore/",
     duration: "1 hour",
   },
   {
@@ -63,7 +63,7 @@ const services = [
     price: "199",
     rating: 4.5,
     reviews: 150,
-    image: "https://images.unsplash.com/photo-1660585297715-5f4eaea39d1a?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.urbanpartner.in/news/achieve-sparkling-clean-windows-with-urban-partner-glass-cleaning-services-in-delhi?srsltid=AfmBOorjUgrzIBZi5RT6sYWdqXHfcEqhROaz_wzzHdPNJkzd2nbgjpN-",
     duration: "1 hour",
   }
 ];
