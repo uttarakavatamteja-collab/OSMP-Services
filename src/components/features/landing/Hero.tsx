@@ -66,9 +66,9 @@ export const Hero = () => {
               <div className="flex flex-col items-start min-w-[120px]">
                 <span className="text-[10px] font-bold uppercase text-slate-400 tracking-wider">Location</span>
                 <select className="bg-transparent text-white text-sm font-semibold focus:outline-none cursor-pointer">
-                  <option className="bg-slate-900">Hyderabad</option>
-                  <option className="bg-slate-900">chennai</option>
                   <option className="bg-slate-900">Bangalore</option>
+                  <option className="bg-slate-900">Hyderabad</option>
+                  <option className="bg-slate-900">Chennai</option>
                 </select>
               </div>
             </div>
