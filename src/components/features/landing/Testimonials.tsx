@@ -10,7 +10,7 @@ export const Testimonials = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-20">
           <h2 className="text-3xl md:text-5xl font-black tracking-tight italic">What Our Community Says</h2>
-          <p className="text-muted-foreground text-lg italic">Join 50,000+ happy users who've transformed their home service experience.</p>
+          <p className="text-muted-foreground text-lg italic">Join 50,000+ happy users who&apos;ve transformed their home service experience.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

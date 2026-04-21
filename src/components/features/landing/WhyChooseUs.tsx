@@ -15,7 +15,7 @@ export const WhyChooseUs = () => {
                 <span className="text-primary italic">OMSP</span> for Home Services
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                We've spent years refining our process to ensure you get the most reliable, 
+                We&apos;ve spent years refining our process to ensure you get the most reliable, 
                 high-quality service at prices that make sense.
               </p>
             </div>
@@ -62,7 +62,7 @@ export const WhyChooseUs = () => {
                       <p className="text-xs opacity-70 font-medium">Expert Technician • 4.9 Rating</p>
                     </div>
                   </div>
-                  <p className="text-sm italic font-medium">"I take pride in my work. OMSP ensures we have the best tools and support to deliver excellence."</p>
+                  <p className="text-sm italic font-medium">&quot;I take pride in my work. OMSP ensures we have the best tools and support to deliver excellence.&quot;</p>
                </div>
             </div>
             {/* Decorative element */}
