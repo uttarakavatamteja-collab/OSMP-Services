@@ -12,7 +12,7 @@ const services = [
     price: "499",
     rating: 4.9,
     reviews: 1250,
-    image: "https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.hommlie.com/page/full-home-cleaning-in-konanakunte-cross",
     duration: "4 hours",
     isFeatured: true
   },
@@ -23,7 +23,7 @@ const services = [
     price: "249",
     rating: 4.7,
     reviews: 820,
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.carepondicherry.com/toilet-deep-cleaning-services.php",
     duration: "1.5 hours",
   },
   {
@@ -33,7 +33,7 @@ const services = [
     price: "399",
     rating: 4.8,
     reviews: 450,
-    image: "https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.mmfs.in/kitchen-cleaning.php",
     duration: "2 hours",
   },
   {
@@ -43,7 +43,7 @@ const services = [
     price: "449",
     rating: 4.6,
     reviews: 320,
-    image: "https://images.unsplash.com/photo-1594042490514-6047587847c2?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.sdfgroups.com/blog/what-are-the-benefits-of-professional-sofa-upholstery-cleaning/",
     duration: "2 hours",
   },
   {
@@ -53,7 +53,7 @@ const services = [
     price: "299",
     rating: 4.9,
     reviews: 190,
-    image: "https://images.unsplash.com/photo-1558317374-067df5f1487a?auto=format&fit=crop&q=80&w=800",
+    image: "http://www.luxlimousines.com.au/benefits-carpet-steam-cleaning/",
     duration: "1 hour",
   },
   {
@@ -63,7 +63,7 @@ const services = [
     price: "199",
     rating: 4.5,
     reviews: 150,
-    image: "https://images.unsplash.com/photo-1527335423021-e8241555dd81?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.urbanpartner.in/news/achieve-sparkling-clean-windows-with-urban-partner-glass-cleaning-services-in-delhi?srsltid=AfmBOoqr4O6N_TdaYkFv-jpzKPsU_Y0zkhiuR3qScJ6RcFTMjrtotkJb",
     duration: "1 hour",
   }
 ];
