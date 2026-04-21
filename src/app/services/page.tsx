@@ -43,7 +43,7 @@ const services = [
     price: "449",
     rating: 4.6,
     reviews: 320,
-    image: "https://images.unsplash.com/photo-1594042490514-6047587847c2?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
     duration: "2 hours",
   },
   {
@@ -53,7 +53,7 @@ const services = [
     price: "299",
     rating: 4.9,
     reviews: 190,
-    image: "https://images.unsplash.com/photo-1558317374-067df5f1487a?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
   },
   {
@@ -63,7 +63,7 @@ const services = [
     price: "199",
     rating: 4.5,
     reviews: 150,
-    image: "https://images.unsplash.com/photo-1527335423021-e8241555dd81?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1660585297715-5f4eaea39d1a?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
   }
 ];
