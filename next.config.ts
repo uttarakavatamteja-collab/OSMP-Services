@@ -11,18 +11,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "plus.unsplash.com",
       },
-      {
-        protocol: "https",
-        hostname: "www.urbancompany.com",
-      },
-      {
-        protocol: "https",
-        hostname: "cleanfanatics.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.urbanpartner.in",
-      },
     ],
   },
 };

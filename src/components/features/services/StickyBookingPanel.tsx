@@ -14,7 +14,7 @@ export const StickyBookingPanel = () => {
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <span className="text-[10px] font-bold uppercase text-muted-foreground">Service Subtotal</span>
-              <div className="text-3xl font-black">₹299</div>
+              <div className="text-3xl font-black">₹699</div>
             </div>
             <div className="flex flex-col items-end gap-1">
               <div className="flex items-center gap-1 text-sm font-bold text-amber-500">
@@ -52,7 +52,7 @@ export const StickyBookingPanel = () => {
             </div>
             <div className="flex items-center justify-between text-lg font-bold">
               <span>Total Price</span>
-              <span className="text-gradient">₹348</span>
+              <span className="text-gradient">₹748</span>
             </div>
           </div>
 

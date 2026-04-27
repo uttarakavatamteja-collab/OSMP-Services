@@ -24,7 +24,7 @@ export const featuredServices = [
     originalPrice: "799",
     rating: 4.9,
     reviews: 1250,
-    image: "/services/cleaning.jpg",
+    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800",
     duration: "3-5 hours",
     isFeatured: true,
     badge: "Bestseller"
@@ -37,7 +37,7 @@ export const featuredServices = [
     originalPrice: "399",
     rating: 4.8,
     reviews: 850,
-    image: "/services/salon.jpg",
+    image: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800",
     duration: "45 mins",
     isFeatured: true
   },
@@ -49,7 +49,7 @@ export const featuredServices = [
     originalPrice: "599",
     rating: 4.7,
     reviews: 920,
-    image: "/services/ac.jpg",
+    image: "https://images.unsplash.com/photo-1631545806609-c3d9fc6fece5?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
     badge: "Seasonal"
   },
@@ -61,7 +61,7 @@ export const featuredServices = [
     originalPrice: "249",
     rating: 4.9,
     reviews: 430,
-    image: "/services/repairs.jpg",
+    image: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800",
     duration: "30 mins",
   }
 ];

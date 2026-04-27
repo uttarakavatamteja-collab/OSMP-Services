@@ -1,10 +1,9 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Calendar, MapPin, CreditCard, ShoppingBag, ArrowLeft, ArrowRight } from "lucide-react";
+import { Check, Calendar, MapPin, CreditCard, ShoppingBag, ArrowLeft, Smartphone, Wifi, IndianRupee, CheckCircle2, PartyPopper } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
@@ -15,9 +14,13 @@ const steps = ["Service", "Schedule", "Address", "Payment"];
 
 export default function CheckoutPage() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [paid, setPaid] = useState(false);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
+  const handlePay = () => setPaid(true);
+
+  if (paid) return <PaymentSuccess />;
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -68,7 +71,7 @@ export default function CheckoutPage() {
                      {currentStep === 0 && <StepService next={nextStep} />}
                      {currentStep === 1 && <StepSchedule next={nextStep} prev={prevStep} />}
                      {currentStep === 2 && <StepAddress next={nextStep} prev={prevStep} />}
-                     {currentStep === 3 && <StepPayment prev={prevStep} />}
+                     {currentStep === 3 && <StepPayment prev={prevStep} onPay={handlePay} />}
                    </motion.div>
                 </AnimatePresence>
              </div>
@@ -98,15 +101,15 @@ export default function CheckoutPage() {
                         <div className="space-y-2 text-sm">
                            <div className="flex justify-between">
                               <span className="text-muted-foreground">Standard Package</span>
-                              <span className="font-medium">$89.00</span>
+                              <span className="font-medium">₹699</span>
                            </div>
                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Service Fee</span>
-                              <span className="font-medium">$5.00</span>
+                              <span className="text-muted-foreground">Platform Fee</span>
+                              <span className="font-medium">₹49</span>
                            </div>
                            <div className="flex justify-between text-emerald-500 font-bold">
                               <span>Discount (PROMO20)</span>
-                              <span>-$10.00</span>
+                              <span>-₹100</span>
                            </div>
                         </div>
 
@@ -114,7 +117,7 @@ export default function CheckoutPage() {
 
                         <div className="flex justify-between items-center text-lg font-bold">
                            <span>Total</span>
-                           <span className="text-gradient font-black">$84.00</span>
+                           <span className="text-gradient font-black">₹675</span>
                         </div>
                       </div>
                       
@@ -214,33 +217,112 @@ const StepAddress = ({ next, prev }: { next: () => void; prev: () => void }) => 
   </Card>
 );
 
-const StepPayment = ({ prev }: { prev: () => void }) => (
-  <Card className="p-6 space-y-6">
-     <div className="space-y-2">
+const StepPayment = ({ prev, onPay }: { prev: () => void; onPay: () => void }) => {
+  const [selected, setSelected] = useState("upi");
+  const methods = [
+    { id: "upi", label: "UPI (GPay / PhonePe / Paytm)", icon: Smartphone, sub: "Instant payment via any UPI app" },
+    { id: "card", label: "Credit / Debit Card", icon: CreditCard, sub: "Visa, Mastercard, RuPay" },
+    { id: "netbanking", label: "Net Banking", icon: Wifi, sub: "All major Indian banks supported" },
+    { id: "cash", label: "Cash After Service", icon: IndianRupee, sub: "Pay in cash when work is done" },
+  ];
+  return (
+    <Card className="p-6 space-y-6">
+      <div className="space-y-2">
         <h2 className="text-xl font-bold tracking-tight">Complete Payment</h2>
         <p className="text-sm text-muted-foreground">Select your preferred payment method.</p>
-     </div>
-     <div className="space-y-3">
-        {[
-          { id: "card", label: "Credit / Debit Card", icon: CreditCard },
-          { id: "apple", label: "Apple Pay", icon: Check },
-          { id: "cash", label: "Cash After Service", icon: MapPin }
-        ].map((method) => (
-          <button key={method.id} className={`flex w-full items-center gap-4 rounded-xl border p-4 transition-all hover:border-primary ${
-            method.id === "card" ? "border-primary bg-primary/5 ring-2 ring-primary/20" : ""
-          }`}>
-             <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-muted">
-                <method.icon className="h-5 w-5" />
-             </div>
-             <span className="flex-1 text-left font-bold text-sm">{method.label}</span>
+      </div>
+      <div className="space-y-3">
+        {methods.map((method) => (
+          <button
+            key={method.id}
+            id={`pay-method-${method.id}`}
+            onClick={() => setSelected(method.id)}
+            className={`flex w-full items-center gap-4 rounded-xl border p-4 text-left transition-all hover:border-primary ${
+              selected === method.id ? "border-primary bg-primary/5 ring-2 ring-primary/20" : ""
+            }`}
+          >
+            <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-muted shrink-0">
+              <method.icon className="h-5 w-5" />
+            </div>
+            <div className="flex-1">
+              <p className="font-bold text-sm">{method.label}</p>
+              <p className="text-[11px] text-muted-foreground">{method.sub}</p>
+            </div>
+            {selected === method.id && <Check className="h-5 w-5 text-primary shrink-0" />}
           </button>
         ))}
-     </div>
-     <div className="flex gap-4">
+      </div>
+      <div className="flex gap-4">
         <Button onClick={prev} variant="outline" className="flex-1 h-12 rounded-xl">Back</Button>
-        <Button className="flex-[2] h-14 rounded-xl gradient-primary font-bold text-lg shadow-xl shadow-primary/20">
-           Confirm & Pay $84.00
+        <Button
+          id="confirm-pay-btn"
+          onClick={onPay}
+          className="flex-[2] h-14 rounded-xl gradient-primary font-bold text-lg shadow-xl shadow-primary/20"
+        >
+          Confirm & Pay ₹675
         </Button>
-     </div>
-  </Card>
+      </div>
+    </Card>
+  );
+};
+
+const PaymentSuccess = () => (
+  <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 text-center">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "spring", stiffness: 200, damping: 18 }}
+      className="max-w-md w-full space-y-8"
+    >
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex h-24 w-24 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/40">
+          <CheckCircle2 className="h-12 w-12 text-emerald-500" />
+        </div>
+        <PartyPopper className="h-8 w-8 text-amber-500 animate-bounce" />
+      </div>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-extrabold tracking-tight">Booking Confirmed! 🎉</h1>
+        <p className="text-muted-foreground">
+          Your payment of <strong>₹675</strong> was received successfully. A confirmation has been sent to your registered email.
+        </p>
+      </div>
+      <Card className="border-2 border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-900 shadow-lg text-left">
+        <CardContent className="p-6 space-y-4">
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Booking ID</span>
+            <span className="font-bold">#OMSP-{Math.floor(100000 + Math.random() * 900000)}</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Service</span>
+            <span className="font-bold">Whole Home Deep Cleaning</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Scheduled</span>
+            <span className="font-bold">Apr 17 · 11:00 AM</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Amount Paid</span>
+            <span className="font-black text-emerald-600">₹675</span>
+          </div>
+          <div className="flex justify-between text-sm">
+            <span className="text-muted-foreground">Payment Method</span>
+            <span className="font-bold">UPI</span>
+          </div>
+        </CardContent>
+      </Card>
+      <div className="flex flex-col gap-3">
+        <Link href="/dashboard">
+          <Button className="w-full h-12 rounded-xl gradient-primary font-bold shadow-lg shadow-primary/20">
+            Track My Booking
+          </Button>
+        </Link>
+        <Link href="/services">
+          <Button variant="outline" className="w-full h-12 rounded-xl">
+            Browse More Services
+          </Button>
+        </Link>
+      </div>
+    </motion.div>
+  </div>
 );
+
