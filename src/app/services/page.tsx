@@ -52,28 +52,6 @@ const services = [
     image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&q=80&w=800",
     duration: "2 hours",
   },
-  {
-    id: "7",
-    title: "Carpet Steam Cleaning",
-    category: "Cleaning",
-    price: "299",
-    originalPrice: "449",
-    rating: 4.9,
-    reviews: 190,
-    image: "https://images.unsplash.com/photo-1558997519-83ea9252edf8?auto=format&fit=crop&q=80&w=800",
-    duration: "1 hour",
-  },
-  {
-    id: "8",
-    title: "Window & Glass Cleaning",
-    category: "Cleaning",
-    price: "199",
-    originalPrice: "299",
-    rating: 4.5,
-    reviews: 150,
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
-    duration: "1 hour",
-  },
 
   // --- Salon ---
   {
@@ -113,19 +91,7 @@ const services = [
   },
 
   // --- Repairs ---
-  {
-    id: "20",
-    title: "AC Filter Cleaning & Service",
-    category: "Repairs",
-    price: "399",
-    originalPrice: "599",
-    rating: 4.7,
-    reviews: 920,
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&q=80&w=800",
-    duration: "1 hour",
-    badge: "Seasonal",
-    isFeatured: true,
-  },
+
   {
     id: "21",
     title: "Switch & Socket Repair",
@@ -149,57 +115,6 @@ const services = [
     duration: "1.5 hours",
   },
 
-  // --- Pest Control ---
-  {
-    id: "30",
-    title: "Cockroach Control Treatment",
-    category: "Pest Control",
-    price: "599",
-    originalPrice: "899",
-    rating: 4.8,
-    reviews: 280,
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800",
-    duration: "2 hours",
-    isFeatured: true,
-    badge: "Guaranteed",
-  },
-  {
-    id: "31",
-    title: "Termite Treatment",
-    category: "Pest Control",
-    price: "1499",
-    originalPrice: "1999",
-    rating: 4.7,
-    reviews: 190,
-    image: "https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&q=80&w=800",
-    duration: "3 hours",
-  },
-
-  // --- Painting ---
-  {
-    id: "40",
-    title: "Interior Wall Painting",
-    category: "Painting",
-    price: "1499",
-    originalPrice: "2199",
-    rating: 4.8,
-    reviews: 360,
-    image: "https://images.unsplash.com/photo-1562259929-b4e1fd3aef09?auto=format&fit=crop&q=80&w=800",
-    duration: "1-2 days",
-    isFeatured: true,
-    badge: "Premium",
-  },
-  {
-    id: "41",
-    title: "Waterproof Exterior Painting",
-    category: "Painting",
-    price: "1999",
-    originalPrice: "2799",
-    rating: 4.6,
-    reviews: 210,
-    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=800",
-    duration: "2-3 days",
-  },
 
   // --- Moving ---
   {
