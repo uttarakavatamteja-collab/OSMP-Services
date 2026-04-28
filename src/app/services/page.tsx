@@ -99,7 +99,7 @@ const services = [
     originalPrice: "599",
     rating: 4.7,
     reviews: 920,
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1631549916768-4119b2e5f926?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
     badge: "Seasonal",
     isFeatured: true,
