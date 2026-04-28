@@ -49,7 +49,7 @@ export const featuredServices = [
     originalPrice: "599",
     rating: 4.7,
     reviews: 920,
-    image: "https://images.unsplash.com/photo-1631545806609-c3d9fc6fece5?auto=format&fit=crop&q=80&w=800",
+    image: "https://www.youtube.com/watch?v=s6NHxfKUkUo",
     duration: "1 hour",
     badge: "Seasonal"
   },
