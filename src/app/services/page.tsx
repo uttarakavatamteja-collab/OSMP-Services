@@ -91,7 +91,19 @@ const services = [
   },
 
   // --- Repairs ---
-
+  {
+    id: "20",
+    title: "AC Filter Cleaning & Service",
+    category: "Repairs",
+    price: "399",
+    originalPrice: "599",
+    rating: 4.7,
+    reviews: 920,
+    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&q=80&w=800",
+    duration: "1 hour",
+    badge: "Seasonal",
+    isFeatured: true,
+  },
   {
     id: "21",
     title: "Switch & Socket Repair",
@@ -138,7 +150,7 @@ const services = [
     originalPrice: "499",
     rating: 4.8,
     reviews: 320,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800",
     duration: "1-2 hours",
   },
 ];

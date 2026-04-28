@@ -25,7 +25,7 @@ const upcomingBookings = [
     date: "17 Apr 2024",
     time: "11:00 AM",
     status: "Confirmed",
-    price: "89.00"
+    price: "699"
   },
   {
     id: "BK-8842",
@@ -33,7 +33,7 @@ const upcomingBookings = [
     date: "22 Apr 2024",
     time: "02:30 PM",
     status: "Pending",
-    price: "25.00"
+    price: "399"
   }
 ];
 
@@ -149,7 +149,7 @@ export default function UserDashboard() {
                               <Badge className={`${booking.status === 'Confirmed' ? 'bg-emerald-500' : 'bg-amber-500'} text-white border-none text-[10px] font-bold uppercase tracking-widest`}>
                                 {booking.status}
                               </Badge>
-                              <p className="font-black text-sm">${booking.price}</p>
+                              <p className="font-black text-sm">₹{booking.price}</p>
                            </div>
                         </div>
                       ))}
