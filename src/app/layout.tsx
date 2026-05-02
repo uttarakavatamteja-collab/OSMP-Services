@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "OSM | On-demand services made simple",
+  title: "OSM Services | On-demand services made simple",
   description: "Modern marketplace for home & professional services. Book trusted experts for cleaning, maintenance, salon, and more.",
 };
 

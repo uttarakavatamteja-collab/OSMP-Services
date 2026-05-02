@@ -127,7 +127,7 @@ export const testimonials = [
     name: "Priya Patel",
     role: "Verified User",
     avatar: "/avatars/user-2.jpg",
-    content: "Used the deep cleaning service for my new apartment. Everything was sparkling clean. Highly recommend OSM!",
+    content: "Used the deep cleaning service for my new apartment. Everything was sparkling clean. Highly recommend OSM Services!",
     rating: 5,
     service: "Deep Cleaning",
     date: "1 week ago"
@@ -147,7 +147,7 @@ export const testimonials = [
 export const faqs = [
   {
     question: "How do you verify your professionals?",
-    answer: "Every professional on OSM undergoes a background check through government-verified agencies, followed by a personal interview and a skill assessment test."
+    answer: "Every professional on OSM Services undergoes a background check through government-verified agencies, followed by a personal interview and a skill assessment test."
   },
   {
     question: "Is there a service guarantee?",

@@ -14,7 +14,7 @@ export const Footer = () => {
                   <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="white"/>
                 </svg>
               </div>
-              <span className="text-xl font-bold tracking-tight text-gradient">OSM</span>
+              <span className="text-xl font-bold tracking-tight text-gradient">OSM Services</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               On-demand services made simple. Your trusted platform for home, professional, and lifestyle services.
@@ -77,7 +77,7 @@ export const Footer = () => {
 
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t flex flex-col gap-4 md:flex-row md:items-center md:justify-between text-sm text-muted-foreground">
-          <p>© 2024 OSM. All rights reserved.</p>
+          <p>© 2024 OSM Services. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>

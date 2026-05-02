@@ -12,7 +12,7 @@ export const WhyChooseUs = () => {
             <div className="space-y-4">
               <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
                 Why Thousands Trust <br />
-                <span className="text-primary italic">OSM</span> for Home Services
+                <span className="text-primary italic">OSM Services</span> for Home Services
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed">
                 We&apos;ve spent years refining our process to ensure you get the most reliable, 
@@ -62,7 +62,7 @@ export const WhyChooseUs = () => {
                       <p className="text-xs opacity-70 font-medium">Expert Technician • 4.9 Rating</p>
                     </div>
                   </div>
-                  <p className="text-sm italic font-medium">&quot;I take pride in my work. OSM ensures we have the best tools and support to deliver excellence.&quot;</p>
+                  <p className="text-sm italic font-medium">&quot;I take pride in my work. OSM Services ensures we have the best tools and support to deliver excellence.&quot;</p>
                </div>
             </div>
             {/* Decorative element */}
