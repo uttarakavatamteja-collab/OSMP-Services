@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -101,15 +101,15 @@ export default function CheckoutPage() {
                         <div className="space-y-2 text-sm">
                            <div className="flex justify-between">
                               <span className="text-muted-foreground">Standard Package</span>
-                              <span className="font-medium">₹699</span>
+                              <span className="font-medium">?699</span>
                            </div>
                            <div className="flex justify-between">
                               <span className="text-muted-foreground">Platform Fee</span>
-                              <span className="font-medium">₹49</span>
+                              <span className="font-medium">?49</span>
                            </div>
                            <div className="flex justify-between text-emerald-500 font-bold">
                               <span>Discount (PROMO20)</span>
-                              <span>-₹100</span>
+                              <span>-?100</span>
                            </div>
                         </div>
 
@@ -117,7 +117,7 @@ export default function CheckoutPage() {
 
                         <div className="flex justify-between items-center text-lg font-bold">
                            <span>Total</span>
-                           <span className="text-gradient font-black">₹675</span>
+                           <span className="text-gradient font-black">?675</span>
                         </div>
                       </div>
                       
@@ -259,7 +259,7 @@ const StepPayment = ({ prev, onPay }: { prev: () => void; onPay: () => void }) =
           onClick={onPay}
           className="flex-[2] h-14 rounded-xl gradient-primary font-bold text-lg shadow-xl shadow-primary/20"
         >
-          Confirm & Pay ₹675
+          Confirm & Pay ?675
         </Button>
       </div>
     </Card>
@@ -281,16 +281,16 @@ const PaymentSuccess = () => (
         <PartyPopper className="h-8 w-8 text-amber-500 animate-bounce" />
       </div>
       <div className="space-y-2">
-        <h1 className="text-3xl font-extrabold tracking-tight">Booking Confirmed! 🎉</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight">Booking Confirmed! ??</h1>
         <p className="text-muted-foreground">
-          Your payment of <strong>₹675</strong> was received successfully. A confirmation has been sent to your registered email.
+          Your payment of <strong>?675</strong> was received successfully. A confirmation has been sent to your registered email.
         </p>
       </div>
       <Card className="border-2 border-emerald-200 dark:border-emerald-900 bg-white dark:bg-slate-900 shadow-lg text-left">
         <CardContent className="p-6 space-y-4">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Booking ID</span>
-            <span className="font-bold">#OMSP-{Math.floor(100000 + Math.random() * 900000)}</span>
+            <span className="font-bold">#OSM Services-{Math.floor(100000 + Math.random() * 900000)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Service</span>
@@ -298,11 +298,11 @@ const PaymentSuccess = () => (
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Scheduled</span>
-            <span className="font-bold">Apr 17 · 11:00 AM</span>
+            <span className="font-bold">Apr 17 � 11:00 AM</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Amount Paid</span>
-            <span className="font-black text-emerald-600">₹675</span>
+            <span className="font-black text-emerald-600">?675</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Payment Method</span>

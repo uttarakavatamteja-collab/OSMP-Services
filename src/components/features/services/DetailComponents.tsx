@@ -37,7 +37,7 @@ export const ServiceDescription = () => {
         <div className="flex items-start gap-4">
           <ShieldCheck className="h-8 w-8 text-primary shrink-0" />
           <div className="space-y-1">
-            <h4 className="font-bold">OMSP Happiness Guarantee</h4>
+            <h4 className="font-bold">OSM Services Happiness Guarantee</h4>
             <p className="text-sm text-muted-foreground">
               Not satisfied with the service? We&apos;ll send someone back to fix it for free, or give you a full refund.
             </p>

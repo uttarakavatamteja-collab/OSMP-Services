@@ -69,19 +69,19 @@ export const featuredServices = [
 export const steps = [
   {
     title: "Choose Your Service",
-    description: "Browse curated services from verified professionals starting as low as ₹149.",
+    description: "Explore premium, curated services delivered by expert professionals at unbeatable prices starting from just ₹149.",
     icon: Search,
     color: "bg-blue-500",
   },
   {
     title: "Book & Schedule",
-    description: "Pick a convenient time slot and tell us where you need the service in seconds.",
+    description: "Select your preferred time slot and location, and let our system match you with the perfect professional.",
     icon: Calendar,
     color: "bg-purple-500",
   },
   {
     title: "Sit Back & Relax",
-    description: "A background-verified professional will arrive at your door to handle the rest.",
+    description: "Sit back and relax as our trusted, background-verified experts arrive fully equipped to deliver an exceptional experience.",
     icon: UserCheck,
     color: "bg-emerald-500",
   },
@@ -127,7 +127,7 @@ export const testimonials = [
     name: "Priya Patel",
     role: "Verified User",
     avatar: "/avatars/user-2.jpg",
-    content: "Used the deep cleaning service for my new apartment. Everything was sparkling clean. Highly recommend OMSP!",
+    content: "Used the deep cleaning service for my new apartment. Everything was sparkling clean. Highly recommend OSM Services!",
     rating: 5,
     service: "Deep Cleaning",
     date: "1 week ago"
@@ -147,7 +147,7 @@ export const testimonials = [
 export const faqs = [
   {
     question: "How do you verify your professionals?",
-    answer: "Every professional on OMSP undergoes a background check through government-verified agencies, followed by a personal interview and a skill assessment test."
+    answer: "Every professional on OSM Services undergoes a background check through government-verified agencies, followed by a personal interview and a skill assessment test."
   },
   {
     question: "Is there a service guarantee?",

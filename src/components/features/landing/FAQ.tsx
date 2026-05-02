@@ -13,7 +13,7 @@ export const FAQ = () => {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center space-y-4 mb-20">
           <h2 className="text-3xl md:text-5xl font-black tracking-tight italic">Common Questions</h2>
-          <p className="text-muted-foreground text-lg italic">Everything you need to know about OMSP.</p>
+          <p className="text-muted-foreground text-lg italic">Everything you need to know about OSM Services.</p>
         </div>
 
         <div className="space-y-4">

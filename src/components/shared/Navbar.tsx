@@ -23,7 +23,7 @@ export const Navbar = () => {
               <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="white"/>
             </svg>
           </div>
-          <span className="text-2xl font-bold tracking-tight text-gradient">OMSP</span>
+          <span className="text-2xl font-bold tracking-tight text-gradient">OSM Services</span>
         </Link>
 
         {/* Location & Search (Desktop) */}
@@ -65,7 +65,35 @@ export const Navbar = () => {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger 
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 active:translate-y-px [&_svg]:size-5 shadow-sm"
+              className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 active:translate-y-px [&_svg]:size-5 shadow-sm"
+            >
+              <Menu />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem>
+                <Link href="/services" className="w-full">Services</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/pricing" className="w-full">Pricing</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/dashboard" className="w-full">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/bookings" className="w-full">My Bookings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/profile" className="w-full">Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem variant="destructive">
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger 
+              className="hidden md:inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none hover:bg-muted hover:text-foreground dark:hover:bg-muted/50 active:translate-y-px [&_svg]:size-5 shadow-sm"
             >
               <User />
             </DropdownMenuTrigger>
