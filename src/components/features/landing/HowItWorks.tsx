@@ -8,7 +8,7 @@ export const HowItWorks = () => {
     <section className="py-24 md:py-32 bg-white dark:bg-slate-950">
       <div className="container mx-auto px-4 text-center">
         <div className="mx-auto max-w-3xl space-y-4 mb-20">
-          <h2 className="text-3xl md:text-5xl font-black tracking-tight">How OSM Services Works</h2>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight">How OSM Works</h2>
           <p className="text-muted-foreground text-lg">Booking a professional service has never been easier. Just 3 simple steps.</p>
         </div>
 

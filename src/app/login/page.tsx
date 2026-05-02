@@ -26,7 +26,7 @@ export default function LoginPage() {
                     <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="white"/>
                  </svg>
               </div>
-              <span className="text-2xl font-black text-gradient">OSM Services</span>
+              <span className="text-2xl font-black text-gradient">OSM</span>
            </Link>
         </div>
 

@@ -30,14 +30,14 @@ export default function SignupPage() {
                     <path d="M12 20L20 12L28 20L20 28L12 20Z" fill="white"/>
                  </svg>
               </div>
-              <span className="text-2xl font-black text-gradient">OSM Services</span>
+              <span className="text-2xl font-black text-gradient">OSM</span>
            </Link>
         </div>
 
         <Card className="border-none shadow-2xl shadow-primary/5 bg-white/70 backdrop-blur-xl dark:bg-black/50">
            <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl font-black">Create Account</CardTitle>
-              <CardDescription>Join OSM Services and start booking services today</CardDescription>
+              <CardDescription>Join OSM and start booking services today</CardDescription>
            </CardHeader>
            <CardContent className="space-y-6">
               

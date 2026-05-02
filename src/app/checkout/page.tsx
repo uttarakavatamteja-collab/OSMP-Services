@@ -290,7 +290,7 @@ const PaymentSuccess = () => (
         <CardContent className="p-6 space-y-4">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Booking ID</span>
-            <span className="font-bold">#OSM Services-{Math.floor(100000 + Math.random() * 900000)}</span>
+            <span className="font-bold">#OSM-{Math.floor(100000 + Math.random() * 900000)}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Service</span>
@@ -298,7 +298,7 @@ const PaymentSuccess = () => (
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Scheduled</span>
-            <span className="font-bold">Apr 17 · 11:00 AM</span>
+            <span className="font-bold">Apr 17 ï¿½ 11:00 AM</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Amount Paid</span>

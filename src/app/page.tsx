@@ -40,7 +40,7 @@ export default function Home() {
               </div>
               
               <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-[1.1]">
-                Experience <span className="italic">OSM Services</span> <br className="hidden sm:block" />
+                Experience <span className="italic">OSM</span> <br className="hidden sm:block" />
                 Right in Your Pocket
               </h2>
               
@@ -51,7 +51,7 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4">
                 <div className="flex items-center gap-4 bg-white/5 p-4 rounded-3xl border border-white/10">
                     <div className="h-12 w-12 rounded-2xl bg-white/10 flex items-center justify-center relative overflow-hidden">
-                        <Image src="/app-icon.png" alt="OSM Services Icon" fill className="object-cover p-1" />
+                        <Image src="/app-icon.png" alt="OSM Icon" fill className="object-cover p-1" />
                     </div>
                     <div className="text-left">
                         <p className="font-bold">Exclusive Deals</p>
