@@ -11,13 +11,45 @@ import { cn } from "@/lib/utils";
 import { allServices } from "@/data/services";
 import { useState } from "react";
 
+const categoryAddons: Record<string, { name: string; price: number }[]> = {
+  Cleaning: [
+    { name: "Sofa Cleaning", price: 299 },
+    { name: "Balcony Wash", price: 199 },
+    { name: "Bathroom Cleaning", price: 149 },
+    { name: "Kitchen Cleaning", price: 249 }
+  ],
+  Salon: [
+    { name: "Hair Styling Treatment", price: 299 },
+    { name: "Pedicure & Manicure", price: 249 },
+    { name: "Extra Massage session", price: 199 }
+  ],
+  Repairs: [
+    { name: "AC gas services", price: 499 },
+    { name: "General services", price: 199 },
+    { name: "Gas filling", price: 399 },
+    { name: "AC install and uninstallation", price: 599 }
+  ],
+  Moving: [
+    { name: "Heavy furniture packing", price: 999 },
+    { name: "Insurance add-on", price: 499 },
+    { name: "Bubble wrap protection", price: 299 }
+  ]
+};
+
 export default function ServiceDetailPage({ params }: { params: { id: string } }) {
   const service = allServices.find((s) => s.id === params.id) || allServices[0];
   const [selectedPrice, setSelectedPrice] = useState(service.price);
+  const [selectedPackage, setSelectedPackage] = useState("standard");
+  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
 
   const basePriceNum = parseInt(service.price, 10) || 499;
   const basicPrice = Math.round(basePriceNum * 0.7);
   const premiumPrice = Math.round(basePriceNum * 1.5);
+
+  const addonSum = selectedAddons.reduce((sum, name) => {
+    const matched = (categoryAddons[service.category] || []).find(a => a.name === name);
+    return sum + (matched ? matched.price : 0);
+  }, 0);
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -79,21 +111,21 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                 <TabsList className="grid w-full grid-cols-3 h-12 bg-muted/50 p-1 rounded-xl">
                   <TabsTrigger 
                     value="basic" 
-                    onClick={() => setSelectedPrice(String(basicPrice))}
+                    onClick={() => { setSelectedPrice(String(basicPrice)); setSelectedPackage("basic"); }}
                     className="rounded-lg data-[state=active]:gradient-primary data-[state=active]:text-white"
                   >
                     Basic
                   </TabsTrigger>
                   <TabsTrigger 
                     value="standard" 
-                    onClick={() => setSelectedPrice(String(basePriceNum))}
+                    onClick={() => { setSelectedPrice(String(basePriceNum)); setSelectedPackage("standard"); }}
                     className="rounded-lg data-[state=active]:gradient-primary data-[state=active]:text-white"
                   >
                     Standard
                   </TabsTrigger>
                   <TabsTrigger 
                     value="premium" 
-                    onClick={() => setSelectedPrice(String(premiumPrice))}
+                    onClick={() => { setSelectedPrice(String(premiumPrice)); setSelectedPackage("premium"); }}
                     className="rounded-lg data-[state=active]:gradient-primary data-[state=active]:text-white"
                   >
                     Premium
@@ -125,6 +157,43 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
               </Tabs>
             </div>
 
+            {/* Select Sub-Services Section */}
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold tracking-tight">Select Specific Sub-Services Required</h2>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {(categoryAddons[service.category] || []).map((addon) => (
+                  <label 
+                    key={addon.name} 
+                    className={`flex items-center justify-between gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                      selectedAddons.includes(addon.name) 
+                        ? "border-primary bg-primary/5 ring-2 ring-primary/10" 
+                        : "border-border hover:border-primary/40 bg-white dark:bg-slate-900"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <input 
+                        type="checkbox" 
+                        checked={selectedAddons.includes(addon.name)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedAddons((prev) => [...prev, addon.name]);
+                          } else {
+                            setSelectedAddons((prev) => prev.filter((a) => a !== addon.name));
+                          }
+                        }}
+                        className="h-5 w-5 accent-primary cursor-pointer"
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-bold text-sm leading-tight">{addon.name}</span>
+                        <span className="text-xs text-muted-foreground">Professional requirement</span>
+                      </div>
+                    </div>
+                    <span className="font-extrabold text-sm whitespace-nowrap">₹{addon.price}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Dynamic Service Description */}
             <div className="space-y-8">
               <div className="space-y-4">
@@ -137,26 +206,13 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                     "Background Verified Experts",
                     "Complete Satisfaction Guarantee",
                     "Transparent upfront pricing",
-                    "Timely professional service",
-                    "Flexible slot choices"
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-                      <span>{item}</span>
+                    "Dedicated support desk"
+                  ].map((feat) => (
+                    <div key={feat} className="flex items-center gap-2 text-sm">
+                      <ShieldCheck className="h-4 w-4 text-emerald-500 shrink-0" />
+                      <span>{feat}</span>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              <div className="rounded-2xl border bg-slate-50 p-6 dark:bg-slate-900">
-                <div className="flex items-start gap-4">
-                  <ShieldCheck className="h-8 w-8 text-primary shrink-0" />
-                  <div className="space-y-1">
-                    <h4 className="font-bold">OSM Services Happiness Guarantee</h4>
-                    <p className="text-sm text-muted-foreground">
-                      Not satisfied with the service? We&apos;ll send someone back to fix it for free, or give you a full refund.
-                    </p>
-                  </div>
                 </div>
               </div>
 
@@ -243,12 +299,12 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                      </div>
                      <div className="flex items-center justify-between text-lg font-bold">
                        <span>Total Price</span>
-                       <span className="text-gradient">₹{parseInt(selectedPrice, 10) + 49}</span>
+                       <span className="text-gradient">₹{parseInt(selectedPrice, 10) + addonSum + 49}</span>
                      </div>
                    </div>
 
                    <Link 
-                     href="/checkout"
+                     href={`/checkout?serviceId=${service.id}&price=${selectedPrice}&package=${selectedPackage}&title=${encodeURIComponent(service.title)}&addons=${encodeURIComponent(selectedAddons.join(","))}`}
                      className={cn(buttonVariants(), "w-full h-14 rounded-xl gradient-primary text-lg font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform")}
                    >
                      Proceed to Booking

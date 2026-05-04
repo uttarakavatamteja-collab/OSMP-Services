@@ -8,9 +8,33 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function SignupPage() {
   const [role, setRole] = useState("user");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !password) return;
+
+    const userObj = { name, email, password, role };
+    localStorage.setItem("currentUser", JSON.stringify(userObj));
+    localStorage.setItem("isLoggedIn", "true");
+
+    // Also update user profile default values
+    localStorage.setItem("userProfile", JSON.stringify({
+      name,
+      email,
+      phone: "+91 98765 43210",
+      address: "123 Luxury Ave, Suite 405, Manhattan, NY 10001"
+    }));
+
+    router.push("/dashboard");
+  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 px-4 dark:bg-slate-950">
@@ -48,40 +72,60 @@ export default function SignupPage() {
                 </TabsList>
               </Tabs>
 
-              <div className="space-y-4">
+              <form onSubmit={handleSignup} className="space-y-4">
                  <div className="space-y-2">
                     <div className="relative">
                        <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input placeholder="Full Name" className="pl-10 h-12 rounded-xl" />
+                       <Input 
+                         placeholder="Full Name" 
+                         className="pl-10 h-12 rounded-xl" 
+                         value={name}
+                         onChange={(e) => setName(e.target.value)}
+                         required 
+                       />
                     </div>
                  </div>
                  <div className="space-y-2">
                     <div className="relative">
                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input placeholder="name@example.com" className="pl-10 h-12 rounded-xl" />
+                       <Input 
+                         placeholder="name@example.com" 
+                         className="pl-10 h-12 rounded-xl" 
+                         type="email"
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         required 
+                       />
                     </div>
                  </div>
                  <div className="space-y-2">
                     <div className="relative">
                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input type="password" placeholder="Create Password" className="pl-10 h-12 rounded-xl" />
+                       <Input 
+                         type="password" 
+                         placeholder="Create Password" 
+                         className="pl-10 h-12 rounded-xl" 
+                         value={password}
+                         onChange={(e) => setPassword(e.target.value)}
+                         required 
+                       />
                     </div>
                  </div>
-              </div>
 
-              <div className="flex items-start gap-3 rounded-lg bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400">
-                 <ShieldCheck className="h-5 w-5 shrink-0" />
-                 <p className="text-[10px] font-bold uppercase tracking-wider">
-                   {role === 'user' 
-                    ? "Safe & secure booking experience guaranteed." 
-                    : "Join our network of verified professionals."}
-                 </p>
-              </div>
+                 <div className="flex items-start gap-3 rounded-lg bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400">
+                    <ShieldCheck className="h-5 w-5 shrink-0" />
+                    <p className="text-[10px] font-bold uppercase tracking-wider">
+                      {role === 'user' 
+                       ? "Safe & secure booking experience guaranteed." 
+                       : "Join our network of verified professionals."}
+                    </p>
+                 </div>
 
-              <Button className="w-full h-12 rounded-xl gradient-primary font-bold text-lg shadow-lg shadow-primary/20 group">
-                 Sign Up
-                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+                 <Button type="submit" className="w-full h-12 rounded-xl gradient-primary font-bold text-lg shadow-lg shadow-primary/20 group">
+                    Sign Up
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                 </Button>
+              </form>
 
               <p className="text-center text-sm text-muted-foreground">
                  Already have an account?{" "}
@@ -99,3 +143,4 @@ export default function SignupPage() {
     </div>
   );
 }
+

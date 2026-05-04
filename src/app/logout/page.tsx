@@ -8,6 +8,7 @@ export default function LogoutPage() {
 
   useEffect(() => {
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("currentUser");
     router.push("/login");
   }, [router]);
 
@@ -17,3 +18,4 @@ export default function LogoutPage() {
     </div>
   );
 }
+

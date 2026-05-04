@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Check, Calendar, MapPin, CreditCard, 
@@ -15,22 +15,77 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
 
 const steps = ["Service", "Schedule", "Address", "Payment"];
 
-export default function CheckoutPage() {
+const allAddons = [
+  { name: "Sofa Cleaning", price: 299 },
+  { name: "Balcony Wash", price: 199 },
+  { name: "Bathroom Cleaning", price: 149 },
+  { name: "Kitchen Cleaning", price: 249 },
+  { name: "Hair Styling Treatment", price: 299 },
+  { name: "Pedicure & Manicure", price: 249 },
+  { name: "Extra Massage session", price: 199 },
+  { name: "AC gas services", price: 499 },
+  { name: "General services", price: 199 },
+  { name: "Gas filling", price: 399 },
+  { name: "AC install and uninstallation", price: 599 },
+  { name: "Heavy furniture packing", price: 999 },
+  { name: "Insurance add-on", price: 499 },
+  { name: "Bubble wrap protection", price: 299 }
+];
+
+function CheckoutContent() {
+  const searchParams = useSearchParams();
+  const titleParam = searchParams.get("title");
+  const priceParam = searchParams.get("price");
+  const packageParam = searchParams.get("package");
+  const addonsParam = searchParams.get("addons");
+
   const [currentStep, setCurrentStep] = useState(0);
   const [paid, setPaid] = useState(false);
+  
   const [bookingDetails, setBookingDetails] = useState({
     date: "17 May 2026",
     time: "11:00 AM",
     address: "123 Luxury Ave, Suite 405, Manhattan, NY 10001",
-    service: "Whole Home Deep Cleaning",
-    price: "499"
+    service: titleParam || "Whole Home Deep Cleaning",
+    price: priceParam || "499",
+    package: packageParam || "Standard",
+    addons: addonsParam || ""
   });
+
+  useEffect(() => {
+    if (titleParam || priceParam || packageParam || addonsParam) {
+      setBookingDetails((prev) => ({
+        ...prev,
+        service: titleParam || prev.service,
+        price: priceParam || prev.price,
+        package: packageParam || prev.package,
+        addons: addonsParam || prev.addons
+      }));
+    }
+  }, [titleParam, priceParam, packageParam, addonsParam]);
 
   const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
+
+  const addonsArray = bookingDetails.addons ? bookingDetails.addons.split(",").filter(Boolean) : [];
+  const selectedAddonsData = addonsArray.map(name => {
+    const match = allAddons.find(a => a.name === name);
+    return match ? match : { name, price: 199 };
+  });
+
+  const addonSum = selectedAddonsData.reduce((sum, item) => sum + item.price, 0);
+
+  // Dynamic pricing breakdown
+  const subtotal = parseInt(bookingDetails.price, 10) || 499;
+  const baseAndAddons = subtotal + addonSum;
+  const gst = Math.round(baseAndAddons * 0.18);
+  const servicesTax = Math.round(baseAndAddons * 0.05);
+  const otherTaxes = Math.round(baseAndAddons * 0.025);
+  const finalPrice = baseAndAddons + gst + servicesTax + otherTaxes;
 
   const handlePay = () => {
     const newBooking = {
@@ -39,7 +94,7 @@ export default function CheckoutPage() {
       date: bookingDetails.date,
       time: bookingDetails.time,
       status: "Confirmed",
-      price: bookingDetails.price,
+      price: String(finalPrice),
       address: bookingDetails.address
     };
 
@@ -51,7 +106,7 @@ export default function CheckoutPage() {
     setPaid(true);
   };
 
-  if (paid) return <PaymentSuccess bookingDetails={bookingDetails} />;
+  if (paid) return <PaymentSuccess bookingDetails={{ ...bookingDetails, price: String(finalPrice) }} />;
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -70,7 +125,7 @@ export default function CheckoutPage() {
             </div>
             
             <div className="flex items-center gap-4 px-4 overflow-x-auto py-2 no-scrollbar">
-              {steps.map((step, index) => (
+               {steps.map((step, index) => (
                 <div key={step} className="flex items-center gap-2">
                    <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all ${
                      index <= currentStep ? "gradient-primary text-white" : "border bg-background text-muted-foreground"
@@ -96,7 +151,7 @@ export default function CheckoutPage() {
                      exit={{ opacity: 0, x: -20 }}
                      className="space-y-6"
                    >
-                     {currentStep === 0 && <StepService next={nextStep} />}
+                     {currentStep === 0 && <StepService next={nextStep} service={bookingDetails.service} packageType={bookingDetails.package} />}
                      {currentStep === 1 && (
                        <StepSchedule 
                          next={nextStep} 
@@ -113,7 +168,7 @@ export default function CheckoutPage() {
                          setDetails={setBookingDetails} 
                        />
                      )}
-                     {currentStep === 3 && <StepPayment prev={prevStep} onPay={handlePay} price={bookingDetails.price} />}
+                     {currentStep === 3 && <StepPayment prev={prevStep} onPay={handlePay} price={String(finalPrice)} />}
                    </motion.div>
                 </AnimatePresence>
              </div>
@@ -129,11 +184,11 @@ export default function CheckoutPage() {
                       <div className="space-y-4">
                         <div className="flex gap-3">
                            <div className="h-16 w-16 rounded-lg bg-muted relative overflow-hidden shrink-0">
-                               <Image src="/cleaning.png" alt="Svc" fill className="object-cover" />
+                               <Image src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800" alt="Svc" fill className="object-cover" />
                            </div>
                            <div className="space-y-1">
                               <h4 className="text-sm font-bold line-clamp-1">{bookingDetails.service}</h4>
-                              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">Standard Package</p>
+                              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider">{bookingDetails.package} Package</p>
                            </div>
                         </div>
 
@@ -141,8 +196,28 @@ export default function CheckoutPage() {
 
                         <div className="space-y-2 text-sm">
                            <div className="flex justify-between">
-                              <span className="text-muted-foreground">Standard Package</span>
-                              <span className="font-medium">Rs. {bookingDetails.price}</span>
+                              <span className="text-muted-foreground">Base Price ({bookingDetails.package})</span>
+                              <span className="font-medium">Rs. {subtotal}</span>
+                           </div>
+
+                           {selectedAddonsData.map((item) => (
+                             <div key={item.name} className="flex justify-between font-medium">
+                                <span className="text-muted-foreground">{item.name} (Sub-Service)</span>
+                                <span>Rs. {item.price}</span>
+                             </div>
+                           ))}
+
+                           <div className="flex justify-between">
+                              <span className="text-muted-foreground">GST (18%)</span>
+                              <span className="font-medium">Rs. {gst}</span>
+                           </div>
+                           <div className="flex justify-between">
+                              <span className="text-muted-foreground">Services Tax (5%)</span>
+                              <span className="font-medium">Rs. {servicesTax}</span>
+                           </div>
+                           <div className="flex justify-between">
+                              <span className="text-muted-foreground">Local / Other Tax (2.5%)</span>
+                              <span className="font-medium">Rs. {otherTaxes}</span>
                            </div>
                            <div className="flex justify-between">
                               <span className="text-muted-foreground">Platform Fee</span>
@@ -158,12 +233,12 @@ export default function CheckoutPage() {
 
                         <div className="flex justify-between items-center text-lg font-bold">
                            <span>Total</span>
-                           <span className="text-gradient font-black">Rs. {bookingDetails.price}</span>
+                           <span className="text-gradient font-black">Rs. {finalPrice}</span>
                         </div>
                       </div>
                       
                       <div className="rounded-xl bg-slate-100 p-3 text-[10px] text-muted-foreground dark:bg-slate-900">
-                         Prices are inclusive of all taxes and service fees.
+                         All calculations are based on standard Indian marketplace tax structures.
                       </div>
                    </CardContent>
                 </Card>
@@ -175,7 +250,15 @@ export default function CheckoutPage() {
   );
 }
 
-const StepService = ({ next }: { next: () => void }) => (
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 font-bold">Loading Checkout...</div>}>
+      <CheckoutContent />
+    </Suspense>
+  );
+}
+
+const StepService = ({ next, service, packageType }: { next: () => void; service: string; packageType: string }) => (
   <Card className="p-6 space-y-6">
      <div className="space-y-2">
         <h2 className="text-xl font-bold tracking-tight">Review Package</h2>
@@ -183,13 +266,13 @@ const StepService = ({ next }: { next: () => void }) => (
      </div>
      <div className="rounded-xl border p-4 space-y-4">
         <div className="flex items-center justify-between">
-           <h3 className="font-bold">Standard Whole Home Clean</h3>
-           <Badge variant="outline" className="border-primary text-primary">Standard</Badge>
+           <h3 className="font-bold">{service}</h3>
+           <Badge variant="outline" className="border-primary text-primary capitalize">{packageType}</Badge>
         </div>
         <ul className="space-y-2 text-sm text-muted-foreground">
-           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> Professional Cleaners</li>
-           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> All cleaning materials included</li>
-           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> Kitchen and Bathroom deep cleaning</li>
+           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> Professional Partners</li>
+           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> Complete service guarantee</li>
+           <li className="flex items-center gap-2"><Check className="h-3 w-3 text-emerald-500" /> Fully custom selected package</li>
         </ul>
      </div>
      <Button onClick={next} className="w-full h-12 rounded-xl gradient-primary font-bold">Confirm and Continue</Button>

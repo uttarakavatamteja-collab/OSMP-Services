@@ -11,8 +11,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
+  const router = useRouter();
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -85,8 +88,8 @@ export const Navbar = () => {
               <DropdownMenuItem>
                 <Link href="/dashboard/profile" className="w-full">Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive">
-                <Link href="/logout" className="w-full">Logout</Link>
+              <DropdownMenuItem onClick={() => router.push("/logout")} className="text-destructive font-bold cursor-pointer">
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -107,8 +110,8 @@ export const Navbar = () => {
               <DropdownMenuItem>
                 <Link href="/dashboard/profile" className="w-full">Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem variant="destructive">
-                <Link href="/logout" className="w-full">Logout</Link>
+              <DropdownMenuItem onClick={() => router.push("/logout")} className="text-destructive font-bold cursor-pointer">
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -117,3 +120,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+

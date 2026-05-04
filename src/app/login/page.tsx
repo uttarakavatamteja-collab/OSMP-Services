@@ -7,12 +7,32 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      if (user.email === email && user.password === password) {
+        localStorage.setItem("isLoggedIn", "true");
+        router.push("/dashboard");
+        return;
+      } else {
+        setError("Invalid email or password. Please try again.");
+        return;
+      }
+    }
+
+    // Fallback if no user was signed up yet
     localStorage.setItem("isLoggedIn", "true");
     router.push("/dashboard");
   };
@@ -46,16 +66,33 @@ export default function LoginPage() {
            </CardHeader>
            <CardContent className="space-y-6">
               <form onSubmit={handleLogin} className="space-y-4">
+                 {error && (
+                   <p className="text-xs font-semibold text-destructive text-center bg-destructive/10 p-2.5 rounded-xl border border-destructive/20">{error}</p>
+                 )}
                  <div className="space-y-2">
                     <div className="relative">
                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input type="email" placeholder="name@example.com" className="pl-10 h-12 rounded-xl" required />
+                       <Input 
+                         type="email" 
+                         placeholder="name@example.com" 
+                         className="pl-10 h-12 rounded-xl" 
+                         value={email}
+                         onChange={(e) => setEmail(e.target.value)}
+                         required 
+                       />
                     </div>
                  </div>
                  <div className="space-y-2">
                     <div className="relative">
                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input type="password" placeholder="••••••••" className="pl-10 h-12 rounded-xl" required />
+                       <Input 
+                         type="password" 
+                         placeholder="••••••••" 
+                         className="pl-10 h-12 rounded-xl" 
+                         value={password}
+                         onChange={(e) => setPassword(e.target.value)}
+                         required 
+                       />
                     </div>
                     <div className="flex justify-end">
                        <button type="button" className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
@@ -96,3 +133,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
