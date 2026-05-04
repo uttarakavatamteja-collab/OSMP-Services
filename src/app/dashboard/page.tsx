@@ -76,9 +76,9 @@ export default function UserDashboard() {
             <Link href="/settings" className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground hover:bg-muted">
                <Settings className="h-4 w-4" /> Settings
             </Link>
-            <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-destructive hover:bg-destructive/5">
+            <Link href="/logout" className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-destructive hover:bg-destructive/5">
                <LogOut className="h-4 w-4" /> Logout
-            </button>
+            </Link>
           </div>
         </div>
       </aside>

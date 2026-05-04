@@ -80,13 +80,13 @@ export const Navbar = () => {
                 <Link href="/dashboard" className="w-full">Dashboard</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/bookings" className="w-full">My Bookings</Link>
+                <Link href="/dashboard/bookings" className="w-full">My Bookings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/profile" className="w-full">Profile</Link>
+                <Link href="/dashboard/profile" className="w-full">Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem variant="destructive">
-                Logout
+                <Link href="/logout" className="w-full">Logout</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -102,13 +102,13 @@ export const Navbar = () => {
                 <Link href="/dashboard" className="w-full">Dashboard</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/bookings" className="w-full">My Bookings</Link>
+                <Link href="/dashboard/bookings" className="w-full">My Bookings</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/profile" className="w-full">Profile</Link>
+                <Link href="/dashboard/profile" className="w-full">Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem variant="destructive">
-                Logout
+                <Link href="/logout" className="w-full">Logout</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

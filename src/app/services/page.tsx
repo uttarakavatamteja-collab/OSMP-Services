@@ -99,7 +99,7 @@ const services = [
     originalPrice: "599",
     rating: 4.7,
     reviews: 920,
-    image: "https://images.unsplash.com/photo-1599696848652-f0ff23bc911f?auto=format&fit=crop&q=80&w=800",
+    image: "/ac-cleaning.png",
     duration: "1 hour",
     badge: "Seasonal",
     isFeatured: true,

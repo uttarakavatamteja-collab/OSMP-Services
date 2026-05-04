@@ -5,9 +5,18 @@ import { Mail, Lock, ArrowRight, Github, Chrome } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    localStorage.setItem("isLoggedIn", "true");
+    router.push("/dashboard");
+  };
+
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 px-4 dark:bg-slate-950">
       {/* Background Blobs */}
@@ -36,28 +45,28 @@ export default function LoginPage() {
               <CardDescription>Enter your credentials to access your account</CardDescription>
            </CardHeader>
            <CardContent className="space-y-6">
-              <div className="space-y-4">
+              <form onSubmit={handleLogin} className="space-y-4">
                  <div className="space-y-2">
                     <div className="relative">
                        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input placeholder="name@example.com" className="pl-10 h-12 rounded-xl" />
+                       <Input type="email" placeholder="name@example.com" className="pl-10 h-12 rounded-xl" required />
                     </div>
                  </div>
                  <div className="space-y-2">
                     <div className="relative">
                        <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                       <Input type="password" placeholder="••••••••" className="pl-10 h-12 rounded-xl" />
+                       <Input type="password" placeholder="••••••••" className="pl-10 h-12 rounded-xl" required />
                     </div>
                     <div className="flex justify-end">
-                       <button className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
+                       <button type="button" className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
                     </div>
                  </div>
-              </div>
 
-              <Button className="w-full h-12 rounded-xl gradient-primary font-bold text-lg shadow-lg shadow-primary/20 group">
-                 Sign In
-                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+                 <Button type="submit" className="w-full h-12 rounded-xl gradient-primary font-bold text-lg shadow-lg shadow-primary/20 group">
+                    Sign In
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                 </Button>
+              </form>
 
               <div className="relative">
                  <div className="absolute inset-0 flex items-center">

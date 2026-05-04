@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Check, Zap, Shield, Star, ArrowRight, Sparkles, Crown, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -147,26 +147,31 @@ export default function PricingPage() {
             </p>
 
             {/* Billing Toggle */}
-            <div className="flex items-center justify-center gap-4 pt-4">
-              <span className={`text-sm font-semibold ${!isYearly ? "text-white" : "text-slate-400"}`}>Monthly</span>
-              <button
-                id="billing-toggle"
-                onClick={() => setIsYearly(!isYearly)}
-                className={`relative h-7 w-14 rounded-full transition-colors duration-300 ${
-                  isYearly ? "bg-violet-500" : "bg-slate-600"
-                }`}
-                aria-label="Toggle billing period"
-              >
-                <span
-                  className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ${
-                    isYearly ? "translate-x-8" : "translate-x-1"
-                  }`}
+            <div className="flex items-center justify-center pt-8">
+              <div className="relative flex items-center p-1.5 bg-slate-900/50 backdrop-blur-md rounded-full border border-white/10 shadow-inner">
+                <button
+                  id="billing-monthly"
+                  onClick={() => setIsYearly(false)}
+                  className={`relative w-32 py-2.5 text-sm font-bold rounded-full z-10 transition-colors duration-300 ${!isYearly ? 'text-slate-900' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Monthly
+                </button>
+                <button
+                  id="billing-yearly"
+                  onClick={() => setIsYearly(true)}
+                  className={`relative w-40 py-2.5 text-sm font-bold rounded-full z-10 transition-colors duration-300 ${isYearly ? 'text-slate-900' : 'text-slate-300 hover:text-white'}`}
+                >
+                  Yearly <span className={`${isYearly ? 'text-emerald-600' : 'text-emerald-400'} font-black text-xs ml-1`}>-25%</span>
+                </button>
+                <motion.div
+                  className="absolute top-1.5 bottom-1.5 w-32 bg-gradient-to-r from-white to-slate-100 rounded-full shadow-lg z-0"
+                  animate={{ 
+                    x: isYearly ? 128 : 0,
+                    width: isYearly ? 160 : 128
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
-              </button>
-              <span className={`text-sm font-semibold ${isYearly ? "text-white" : "text-slate-400"}`}>
-                Yearly{" "}
-                <span className="text-emerald-400 text-xs font-bold ml-1">Save 25%</span>
-              </span>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -205,9 +210,20 @@ export default function PricingPage() {
                   <p className="text-sm text-muted-foreground">{plan.description}</p>
                 </div>
 
-                <div className="mt-6 flex items-baseline gap-1">
-                  <span className="text-4xl font-black">
-                    ₹{isYearly ? plan.yearlyPrice.toLocaleString("en-IN") : plan.monthlyPrice}
+                <div className="mt-6 flex items-baseline gap-1 overflow-hidden">
+                  <span className="text-4xl font-black flex">
+                    ₹
+                    <AnimatePresence mode="popLayout">
+                      <motion.span
+                        key={isYearly ? 'yearly' : 'monthly'}
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -20, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {isYearly ? plan.yearlyPrice.toLocaleString("en-IN") : plan.monthlyPrice}
+                      </motion.span>
+                    </AnimatePresence>
                   </span>
                   <span className="text-sm text-muted-foreground">/{isYearly ? "year" : "month"}</span>
                 </div>
