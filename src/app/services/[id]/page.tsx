@@ -167,9 +167,14 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
             <div className="space-y-6">
               <h2 className="text-2xl font-bold tracking-tight">Select Specific Sub-Services Required</h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {(categoryAddons[service.category] || []).map((addon) => (
-                  <label 
+                {(categoryAddons[service.category] || []).map((addon, idx) => (
+                  <motion.label 
                     key={addon.name} 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     className={`flex items-center justify-between gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                       selectedAddons.includes(addon.name) 
                         ? "border-primary bg-primary/5 ring-2 ring-primary/10" 
@@ -195,7 +200,7 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                       </div>
                     </div>
                     <span className="font-extrabold text-sm whitespace-nowrap">₹{addon.price}</span>
-                  </label>
+                  </motion.label>
                 ))}
               </div>
             </div>
@@ -340,28 +345,34 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
 }
 
 const PackageCard = ({ price, title, features, isPopular }: { price: string, title: string, features: string[], isPopular?: boolean }) => (
-  <Card className={`relative overflow-hidden border-2 transition-all bg-white dark:bg-slate-900 ${isPopular ? "border-primary shadow-lg shadow-primary/5" : "border-border"}`}>
-    {isPopular && (
-      <div className="absolute right-0 top-0 gradient-primary px-3 py-1 text-[10px] font-bold text-white uppercase tracking-wider rounded-bl-xl">
-        Most Popular
-      </div>
-    )}
-    <CardContent className="p-6 space-y-6">
-      <div className="space-y-1">
-        <h3 className="font-bold text-lg">{title}</h3>
-        <div className="flex items-baseline gap-1">
-          <span className="text-3xl font-black">₹{price}</span>
-          <span className="text-sm text-muted-foreground">/ one-time</span>
+  <motion.div
+    whileHover={{ y: -6, scale: 1.01 }}
+    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    className="h-full"
+  >
+    <Card className={`relative overflow-hidden border-2 h-full transition-all bg-white dark:bg-slate-900 ${isPopular ? "border-primary shadow-lg shadow-primary/5" : "border-border"}`}>
+      {isPopular && (
+        <div className="absolute right-0 top-0 gradient-primary px-3 py-1 text-[10px] font-bold text-white uppercase tracking-wider rounded-bl-xl">
+          Most Popular
         </div>
-      </div>
-      <div className="space-y-3">
-        {features.map((f) => (
-          <div key={f} className="flex items-center gap-2 text-sm">
-            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-            <span>{f}</span>
+      )}
+      <CardContent className="p-6 space-y-6">
+        <div className="space-y-1">
+          <h3 className="font-bold text-lg">{title}</h3>
+          <div className="flex items-baseline gap-1">
+            <span className="text-3xl font-black">₹{price}</span>
+            <span className="text-sm text-muted-foreground">/ one-time</span>
           </div>
-        ))}
-      </div>
-    </CardContent>
-  </Card>
+        </div>
+        <div className="space-y-3">
+          {features.map((f) => (
+            <div key={f} className="flex items-center gap-2 text-sm">
+              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+              <span>{f}</span>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  </motion.div>
 );

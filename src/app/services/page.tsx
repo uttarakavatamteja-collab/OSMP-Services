@@ -359,11 +359,16 @@ function ServicesContent() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-            {categoryFeatures.map((cat) => (
-              <button
+            {categoryFeatures.map((cat, index) => (
+              <motion.button
                 key={cat.category}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.04, type: "spring", stiffness: 100 }}
+                whileHover={{ scale: 1.04, y: -4 }}
+                whileTap={{ scale: 0.96 }}
                 onClick={() => setSelectedExplorerCategory(cat)}
-                className="group relative flex flex-col items-center gap-3 p-4 rounded-2xl border-2 border-transparent hover:border-primary/30 bg-muted/40 hover:bg-white dark:hover:bg-slate-800 transition-all text-center hover:scale-[1.03] hover:shadow-xl hover:shadow-primary/5"
+                className="group relative flex flex-col items-center gap-3 p-4 rounded-2xl border-2 border-transparent hover:border-primary/30 bg-muted/40 hover:bg-white dark:hover:bg-slate-800 transition-all text-center hover:shadow-xl hover:shadow-primary/5"
               >
                 <div className="h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-muted overflow-hidden relative shadow-md">
                    <img src={cat.image} alt={cat.category} className="h-full w-full object-cover transition-transform group-hover:scale-110" />
@@ -374,7 +379,7 @@ function ServicesContent() {
                      {cat.category}
                    </h3>
                 </div>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -451,9 +456,14 @@ function ServicesContent() {
                       <div key={sub.title} className="space-y-4">
                          <h3 className="text-sm font-black text-muted-foreground uppercase tracking-wider">{sub.title}</h3>
                          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                            {sub.items.map((item: any) => (
-                               <button
+                            {sub.items.map((item: any, itemIndex: number) => (
+                               <motion.button
                                  key={item.name}
+                                 initial={{ opacity: 0, scale: 0.9 }}
+                                 animate={{ opacity: 1, scale: 1 }}
+                                 transition={{ delay: itemIndex * 0.03 }}
+                                 whileHover={{ scale: 1.05 }}
+                                 whileTap={{ scale: 0.95 }}
                                  onClick={() => {
                                    setActiveCategory(selectedExplorerCategory.slug);
                                    setSelectedExplorerCategory(null);
@@ -465,7 +475,7 @@ function ServicesContent() {
                                      <h4 className="text-xs font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">{item.name}</h4>
                                      <p className="text-[10px] text-muted-foreground font-medium line-clamp-1">{item.desc}</p>
                                   </div>
-                               </button>
+                               </motion.button>
                             ))}
                          </div>
                       </div>
