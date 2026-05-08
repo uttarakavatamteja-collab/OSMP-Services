@@ -1,3 +1,5 @@
+"use client";
+
 import { Hero } from "@/components/features/landing/Hero";
 import { CategoryGrid } from "@/components/features/landing/CategoryGrid";
 import { FeaturedServices } from "@/components/features/landing/FeaturedServices";
@@ -7,6 +9,7 @@ import { Testimonials } from "@/components/features/landing/Testimonials";
 import { FAQ } from "@/components/features/landing/FAQ";
 import { ShieldCheck, Sparkles, Smartphone, Apple } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 // Custom Google Play Icon
 const GooglePlayIcon = () => (
@@ -26,7 +29,13 @@ export default function Home() {
       <Testimonials />
       
       {/* App Download Section - Refined */}
-      <section className="py-24 bg-primary text-white overflow-hidden relative">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8 }}
+        className="py-24 bg-primary text-white overflow-hidden relative"
+      >
         {/* Background Accents */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-black/10 rounded-full blur-[80px] -translate-x-1/2 translate-y-1/2" />
@@ -89,7 +98,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative w-full lg:w-1/2 flex items-center justify-center">
+            <motion.div 
+              animate={{ y: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="relative w-full lg:w-1/2 flex items-center justify-center"
+            >
               <div className="relative group">
                 {/* Visual Glow */}
                 <div className="absolute inset-0 bg-white/20 rounded-[4rem] blur-3xl group-hover:scale-110 transition-transform duration-700" />
@@ -138,10 +151,10 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       <FAQ />
     </div>

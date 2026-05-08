@@ -7,18 +7,22 @@ import Image from "next/image";
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-900 py-20 lg:py-32">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-slate-950 py-28 lg:py-36">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/hero-bg.jpg"
           alt="Modern Home Interior"
           fill
-          className="object-cover opacity-40 grayscale-[0.2]"
+          className="object-cover opacity-30 grayscale-[0.2]"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent" />
       </div>
+
+      {/* Ambient Glowing Orbs */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 w-[350px] h-[350px] rounded-full bg-primary/15 blur-[130px] animate-pulse" style={{ animationDuration: "8s" }} />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 w-[300px] h-[300px] rounded-full bg-purple-500/15 blur-[110px] animate-pulse" style={{ animationDuration: "12s" }} />
 
       <div className="container relative z-10 mx-auto px-4 text-center">
         <motion.div
