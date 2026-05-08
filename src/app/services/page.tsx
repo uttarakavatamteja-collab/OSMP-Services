@@ -3,8 +3,9 @@
 import { ListingHeader, ListingSidebar } from "@/components/features/services/ListingComponents";
 import { ServiceCard } from "@/components/shared/ServiceCard";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { X, Sparkles, ChevronRight } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 const services = [
   // --- Cleaning ---
@@ -154,6 +155,43 @@ const services = [
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800",
     duration: "1-2 hours",
   },
+
+  // --- Laptops ---
+  {
+    id: "60",
+    title: "Laptop General Diagnostics & Service",
+    category: "Laptops",
+    price: "499",
+    originalPrice: "799",
+    rating: 4.8,
+    reviews: 320,
+    image: "https://images.unsplash.com/photo-1588702547919-26089e690ecc?auto=format&fit=crop&q=80&w=800",
+    duration: "1-2 hours",
+    isFeatured: true,
+    badge: "Most Booked",
+  },
+  {
+    id: "61",
+    title: "Laptop Screen Replacement",
+    category: "Laptops",
+    price: "1999",
+    originalPrice: "2999",
+    rating: 4.9,
+    reviews: 150,
+    image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=800",
+    duration: "1.5 hours",
+  },
+  {
+    id: "62",
+    title: "Keyboard & Battery Doorstep Replacement",
+    category: "Laptops",
+    price: "899",
+    originalPrice: "1499",
+    rating: 4.7,
+    reviews: 180,
+    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=800",
+    duration: "1 hour",
+  },
 ];
 
 const categoryFeatures = [
@@ -258,12 +296,38 @@ const categoryFeatures = [
         ]
       }
     ]
+  },
+  {
+    category: "Laptop Repair & Service",
+    slug: "laptops",
+    image: "https://images.unsplash.com/photo-1588702547919-26089e690ecc?auto=format&fit=crop&q=80&w=800",
+    subsections: [
+      {
+        title: "Laptop Services",
+        items: [
+          { name: "Diagnostics & Service", desc: "Complete health check", icon: "💻" },
+          { name: "Screen Replacement", desc: "Genuine screen fix", icon: "🖥️" },
+          { name: "Keyboard & Battery", desc: "Part replacement", icon: "🔋" },
+          { name: "OS & Software Install", desc: "Setup & Antivirus", icon: "💿" }
+        ]
+      }
+    ]
   }
 ];
 
-export default function ServicesPage() {
+function ServicesContent() {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category");
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedExplorerCategory, setSelectedExplorerCategory] = useState<any | null>(null);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setActiveCategory(categoryParam);
+    } else {
+      setActiveCategory("All");
+    }
+  }, [categoryParam]);
 
   const displayedServices = activeCategory === "All" 
     ? services 
@@ -430,5 +494,13 @@ export default function ServicesPage() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export default function ServicesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 font-bold">Loading Services...</div>}>
+      <ServicesContent />
+    </Suspense>
   );
 }

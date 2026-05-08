@@ -157,5 +157,45 @@ export const allServices = [
     image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800",
     duration: "1-2 hours",
     description: "Safe and proper setup for all types of furniture - beds, tables, wardrobes, and more."
+  },
+
+  // --- Laptops ---
+  {
+    id: "60",
+    title: "Laptop General Diagnostics & Service",
+    category: "Laptops",
+    price: "499",
+    originalPrice: "799",
+    rating: 4.8,
+    reviews: 320,
+    image: "https://images.unsplash.com/photo-1588702547919-26089e690ecc?auto=format&fit=crop&q=80&w=800",
+    duration: "1-2 hours",
+    isFeatured: true,
+    badge: "Most Booked",
+    description: "Complete doorstep diagnostics, internal dust cleaning, fan servicing, and thermal paste replacement to boost your laptop's speed and prevent overheating."
+  },
+  {
+    id: "61",
+    title: "Laptop Screen Replacement",
+    category: "Laptops",
+    price: "1999",
+    originalPrice: "2999",
+    rating: 4.9,
+    reviews: 150,
+    image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=800",
+    duration: "1.5 hours",
+    description: "Affordable, professional laptop screen replacement at your doorstep for all major brands. High-quality genuine replacement screens with warranty included."
+  },
+  {
+    id: "62",
+    title: "Keyboard & Battery Doorstep Replacement",
+    category: "Laptops",
+    price: "899",
+    originalPrice: "1499",
+    rating: 4.7,
+    reviews: 180,
+    image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=800",
+    duration: "1 hour",
+    description: "Fix unresponsive keys or get a dead battery replaced at your doorstep. Fast service by certified technicians with genuine, reliable spare parts."
   }
 ];

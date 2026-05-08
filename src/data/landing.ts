@@ -1,18 +1,19 @@
 import {
   Sparkles, Wrench, Scissors, Paintbrush,
   Stethoscope, Tv, Bug, Truck, Search, Calendar, UserCheck,
-  ShieldCheck, Clock, ThumbsUp, Star
+  ShieldCheck, Clock, ThumbsUp, Star, Laptop
 } from "lucide-react";
 
 export const categories = [
-  { name: "Cleaning", icon: Sparkles, color: "text-blue-500", bg: "bg-blue-50", href: "/services/cleaning" },
-  { name: "Repairs", icon: Wrench, color: "text-orange-500", bg: "bg-orange-50", href: "/services/repairs" },
-  { name: "Salon", icon: Scissors, color: "text-pink-500", bg: "bg-pink-50", href: "/services/salon" },
-  { name: "Painting", icon: Paintbrush, color: "text-indigo-500", bg: "bg-indigo-50", href: "/services/painting" },
-  { name: "Health", icon: Stethoscope, color: "text-emerald-500", bg: "bg-emerald-50", href: "/services/health" },
-  { name: "Appliances", icon: Tv, color: "text-red-500", bg: "bg-red-50", href: "/services/appliances" },
-  { name: "Pest Control", icon: Bug, color: "text-green-500", bg: "bg-green-50", href: "/services/pest-control" },
-  { name: "Moving", icon: Truck, color: "text-amber-500", bg: "bg-amber-50", href: "/services/moving" },
+  { name: "Cleaning", icon: Sparkles, color: "text-blue-500", bg: "bg-blue-50", href: "/services?category=cleaning" },
+  { name: "Repairs", icon: Wrench, color: "text-orange-500", bg: "bg-orange-50", href: "/services?category=repairs" },
+  { name: "Salon", icon: Scissors, color: "text-pink-500", bg: "bg-pink-50", href: "/services?category=salon" },
+  { name: "Painting", icon: Paintbrush, color: "text-indigo-500", bg: "bg-indigo-50", href: "/services?category=painting" },
+  { name: "Health", icon: Stethoscope, color: "text-emerald-500", bg: "bg-emerald-50", href: "/services?category=health" },
+  { name: "Appliances", icon: Tv, color: "text-red-500", bg: "bg-red-50", href: "/services?category=appliances" },
+  { name: "Pest Control", icon: Bug, color: "text-green-500", bg: "bg-green-50", href: "/services?category=pest%20control" },
+  { name: "Moving", icon: Truck, color: "text-amber-500", bg: "bg-amber-50", href: "/services?category=moving" },
+  { name: "Laptops", icon: Laptop, color: "text-cyan-500", bg: "bg-cyan-50", href: "/services?category=laptops" },
 ];
 
 export const featuredServices = [

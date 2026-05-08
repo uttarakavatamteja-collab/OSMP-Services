@@ -33,7 +33,11 @@ const allAddons = [
   { name: "AC install and uninstallation", price: 599 },
   { name: "Heavy furniture packing", price: 999 },
   { name: "Insurance add-on", price: 499 },
-  { name: "Bubble wrap protection", price: 299 }
+  { name: "Bubble wrap protection", price: 299 },
+  { name: "OS Installation / Upgrade", price: 399 },
+  { name: "Thermal Paste Replacement", price: 199 },
+  { name: "RAM Upgrade (8GB)", price: 1499 },
+  { name: "SSD Upgrade (512GB)", price: 2499 }
 ];
 
 function CheckoutContent() {
