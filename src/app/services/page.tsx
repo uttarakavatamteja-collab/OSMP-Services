@@ -178,7 +178,7 @@ const services = [
     originalPrice: "2999",
     rating: 4.9,
     reviews: 150,
-    image: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1580647195020-2e2548eb4b74?auto=format&fit=crop&q=80&w=800",
     duration: "1.5 hours",
   },
   {
@@ -200,7 +200,7 @@ const services = [
     originalPrice: "1799",
     rating: 4.8,
     reviews: 450,
-    image: "https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1562408590-e32931084e23?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
     isFeatured: true,
     badge: "Bestseller",
@@ -213,7 +213,7 @@ const services = [
     originalPrice: "899",
     rating: 4.7,
     reviews: 230,
-    image: "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1603969072881-b0fa7b34d217?auto=format&fit=crop&q=80&w=800",
     duration: "45 mins",
   },
   {
@@ -224,7 +224,7 @@ const services = [
     originalPrice: "599",
     rating: 4.6,
     reviews: 120,
-    image: "https://images.unsplash.com/photo-1510903117032-f1596c327647?auto=format&fit=crop&q=80&w=800",
+    image: "https://images.unsplash.com/photo-1603968709808-76610678c903?auto=format&fit=crop&q=80&w=800",
     duration: "30 mins",
   },
   {
