@@ -39,6 +39,12 @@ const categoryAddons: Record<string, { name: string; price: number }[]> = {
     { name: "Thermal Paste Replacement", price: 199 },
     { name: "RAM Upgrade (8GB)", price: 1499 },
     { name: "SSD Upgrade (512GB)", price: 2499 }
+  ],
+  Mobiles: [
+    { name: "Data Backup & Restore", price: 199 },
+    { name: "Tempered Glass Installation", price: 99 },
+    { name: "OS Software Tuning", price: 149 },
+    { name: "Internal Port Cleaning", price: 89 }
   ]
 };
 
@@ -56,6 +62,18 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
     const matched = (categoryAddons[service.category] || []).find(a => a.name === name);
     return sum + (matched ? matched.price : 0);
   }, 0);
+
+  const getServiceInclusions = () => {
+    const t = service.title.toLowerCase();
+    if (t.includes("screen")) return ["Thorough initial device diagnosis", "Precision safe removal of shattered glass", "Bonded installation of replacement digitizer", "Post-installation responsiveness testing", "90-Day part performance warranty"];
+    if (t.includes("battery")) return ["Comprehensive device current drain test", "Environmentally safe old cell disposal", "Zero-cycle OEM Grade replacement swap", "Power-cycle cycle testing", "High temperature stress safety check"];
+    if (t.includes("cleaning")) return ["Eco-friendly premium cleaning agents", "Heavy duty automated orbital scrubbing", "Deep extraction high-power vacuuming", "Microbial disinfection protocol", "Post-service spotless verification walk-through"];
+    if (t.includes("software") || t.includes("diagnostics")) return ["Deep system file structure analysis", "Cloud sync backup secure protocol", "Registry integrity validation", "Optimization of background processes", "Complete malware definitions update"];
+    if (t.includes("port") || t.includes("charge")) return ["Precision magnified port inspect", "Debris / lint non-conductive extraction", "Terminal voltage logic throughput test", "Microsolder circuit reconnection if needed", "Connector fit tension calibration"];
+    return ["100% Verified background-checked Expert", "Premium grade materials and tooling", "Post-delivery cleanup operations", "Zero hidden hidden charges promise", "Dedicated account manager support"];
+  };
+
+  const inclusions = getServiceInclusions();
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -212,14 +230,20 @@ export default function ServiceDetailPage({ params }: { params: { id: string } }
                 <p className="text-muted-foreground leading-relaxed">
                   {service.description || "Expert service tailored exactly to your needs. Highly rated professionals ready to deliver high quality results."}
                 </p>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 py-2">
+                  {inclusions.map((feat) => (
+                    <div key={feat} className="flex items-start gap-3 text-sm bg-white dark:bg-slate-900 border p-3 rounded-xl transition-colors hover:border-primary/40">
+                      <CheckCircle2 className="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" />
+                      <span className="font-medium">{feat}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 border-t pt-4 opacity-70">
                   {[
-                    "Background Verified Experts",
+                    "Background Verified Expert",
                     "Complete Satisfaction Guarantee",
-                    "Transparent upfront pricing",
-                    "Dedicated support desk"
                   ].map((feat) => (
-                    <div key={feat} className="flex items-center gap-2 text-sm">
+                    <div key={feat} className="flex items-center gap-2 text-xs italic">
                       <ShieldCheck className="h-4 w-4 text-emerald-500 shrink-0" />
                       <span>{feat}</span>
                     </div>

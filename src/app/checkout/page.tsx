@@ -37,7 +37,11 @@ const allAddons = [
   { name: "OS Installation / Upgrade", price: 399 },
   { name: "Thermal Paste Replacement", price: 199 },
   { name: "RAM Upgrade (8GB)", price: 1499 },
-  { name: "SSD Upgrade (512GB)", price: 2499 }
+  { name: "SSD Upgrade (512GB)", price: 2499 },
+  { name: "Data Backup & Restore", price: 199 },
+  { name: "Tempered Glass Installation", price: 99 },
+  { name: "OS Software Tuning", price: 149 },
+  { name: "Internal Port Cleaning", price: 89 }
 ];
 
 function CheckoutContent() {

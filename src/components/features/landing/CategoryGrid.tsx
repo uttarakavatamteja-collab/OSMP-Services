@@ -23,23 +23,23 @@ export const CategoryGrid = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-8">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
           {categories.map((category, index) => (
             <motion.div
               key={category.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.05, duration: 0.3 }}
+              transition={{ delay: index * 0.05, duration: 0.4, ease: "easeOut" }}
             >
               <Link 
                 href={category.href}
-                className="group hover-lift flex flex-col items-center gap-4 rounded-3xl border border-slate-100 bg-slate-50/50 p-6 transition-all hover:border-primary/30 hover:bg-white hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900"
+                className="group flex flex-col items-center gap-5 rounded-[2rem] border border-slate-200 bg-white p-8 transition-all duration-300 hover:-translate-y-2 hover:border-slate-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.08)] dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900"
               >
-                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${category.bg} ${category.color} transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-sm`}>
-                  <category.icon className="h-8 w-8" />
+                <div className={`flex h-20 w-20 items-center justify-center rounded-3xl ${category.bg} ${category.color} transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-inner`}>
+                  <category.icon className="h-10 w-10" />
                 </div>
-                <span className="text-sm font-bold tracking-tight text-center group-hover:text-primary transition-colors">{category.name}</span>
+                <span className="text-lg font-extrabold tracking-tight text-center text-slate-900 dark:text-white group-hover:text-primary transition-colors">{category.name}</span>
               </Link>
             </motion.div>
           ))}
