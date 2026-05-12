@@ -178,7 +178,7 @@ const services = [
     originalPrice: "2999",
     rating: 4.9,
     reviews: 150,
-    image: "https://images.unsplash.com/photo-1580647195020-2e2548eb4b74?auto=format&fit=crop&q=80&w=800",
+    image: "/services/laptop_screen_repair.png",
     duration: "1.5 hours",
   },
   {
@@ -213,7 +213,7 @@ const services = [
     originalPrice: "899",
     rating: 4.7,
     reviews: 230,
-    image: "https://images.unsplash.com/photo-1603969072881-b0fa7b34d217?auto=format&fit=crop&q=80&w=800",
+    image: "/services/phone_battery_replacement.png",
     duration: "45 mins",
   },
   {
@@ -224,7 +224,7 @@ const services = [
     originalPrice: "599",
     rating: 4.6,
     reviews: 120,
-    image: "https://images.unsplash.com/photo-1603968709808-76610678c903?auto=format&fit=crop&q=80&w=800",
+    image: "/services/mobile_charging_port.png",
     duration: "30 mins",
   },
   {
