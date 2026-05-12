@@ -1,7 +1,7 @@
 import {
   Sparkles, Wrench, Scissors, Paintbrush,
   Stethoscope, Tv, Bug, Truck, Search, Calendar, UserCheck,
-  ShieldCheck, Clock, ThumbsUp, Star, Laptop
+  ShieldCheck, Clock, ThumbsUp, Star, Laptop, Smartphone
 } from "lucide-react";
 
 export const categories = [
@@ -14,6 +14,7 @@ export const categories = [
   { name: "Pest Control", icon: Bug, color: "text-green-500", bg: "bg-green-50", href: "/services?category=pest%20control" },
   { name: "Moving", icon: Truck, color: "text-amber-500", bg: "bg-amber-50", href: "/services?category=moving" },
   { name: "Laptops", icon: Laptop, color: "text-cyan-500", bg: "bg-cyan-50", href: "/services?category=laptops" },
+  { name: "Mobiles", icon: Smartphone, color: "text-indigo-600", bg: "bg-indigo-50", href: "/services?category=mobiles" },
 ];
 
 export const featuredServices = [

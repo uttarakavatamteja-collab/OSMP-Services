@@ -197,5 +197,57 @@ export const allServices = [
     image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=800",
     duration: "1 hour",
     description: "Fix unresponsive keys or get a dead battery replaced at your doorstep. Fast service by certified technicians with genuine, reliable spare parts."
+  },
+
+  // --- Mobiles ---
+  {
+    id: "70",
+    title: "Mobile Screen Repair & Replacement",
+    category: "Mobiles",
+    price: "999",
+    originalPrice: "1799",
+    rating: 4.8,
+    reviews: 450,
+    image: "https://images.unsplash.com/photo-1597740985671-2a8a3b80502e?auto=format&fit=crop&q=80&w=800",
+    duration: "1 hour",
+    isFeatured: true,
+    badge: "Bestseller",
+    description: "Fix cracked or broken screens at your doorstep. We use premium quality spare parts with a guaranteed warranty."
+  },
+  {
+    id: "71",
+    title: "Mobile Battery Replacement",
+    category: "Mobiles",
+    price: "499",
+    originalPrice: "899",
+    rating: 4.7,
+    reviews: 230,
+    image: "https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&q=80&w=800",
+    duration: "45 mins",
+    description: "Say goodbye to fast-draining batteries. Get a high-quality replacement battery installed on-site."
+  },
+  {
+    id: "72",
+    title: "Mobile Charging Port Repair",
+    category: "Mobiles",
+    price: "299",
+    originalPrice: "599",
+    rating: 4.6,
+    reviews: 120,
+    image: "https://images.unsplash.com/photo-1510903117032-f1596c327647?auto=format&fit=crop&q=80&w=800",
+    duration: "30 mins",
+    description: "Restores loose or non-functional charging ports safely by experts right in front of you."
+  },
+  {
+    id: "73",
+    title: "Software Update & Backup Service",
+    category: "Mobiles",
+    price: "199",
+    originalPrice: "399",
+    rating: 4.9,
+    reviews: 85,
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
+    duration: "45 mins",
+    description: "Need help with data migration or stuck operating system? Our experts optimize your software and safely backup data."
   }
 ];

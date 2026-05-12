@@ -34,12 +34,12 @@ export const CategoryGrid = () => {
             >
               <Link 
                 href={category.href}
-                className="group flex flex-col items-center gap-4 rounded-3xl border border-slate-100 bg-slate-50/50 p-6 transition-all hover:border-primary/30 hover:bg-white hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900"
+                className="group hover-lift flex flex-col items-center gap-4 rounded-3xl border border-slate-100 bg-slate-50/50 p-6 transition-all hover:border-primary/30 hover:bg-white hover:shadow-xl hover:shadow-primary/5 dark:border-slate-800 dark:bg-slate-900/50 dark:hover:bg-slate-900"
               >
-                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${category.bg} ${category.color} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 shadow-sm`}>
+                <div className={`flex h-16 w-16 items-center justify-center rounded-2xl ${category.bg} ${category.color} transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 shadow-sm`}>
                   <category.icon className="h-8 w-8" />
                 </div>
-                <span className="text-sm font-bold tracking-tight text-center">{category.name}</span>
+                <span className="text-sm font-bold tracking-tight text-center group-hover:text-primary transition-colors">{category.name}</span>
               </Link>
             </motion.div>
           ))}

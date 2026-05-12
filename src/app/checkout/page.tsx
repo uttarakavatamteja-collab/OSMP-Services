@@ -91,9 +91,12 @@ function CheckoutContent() {
   const otherTaxes = Math.round(baseAndAddons * 0.025);
   const finalPrice = baseAndAddons + gst + servicesTax + otherTaxes;
 
+  const [confirmedBookingId, setConfirmedBookingId] = useState<string>("");
+
   const handlePay = () => {
+    const randomId = `BK-${Math.floor(1000 + Math.random() * 9000)}`;
     const newBooking = {
-      id: `BK-${Math.floor(1000 + Math.random() * 9000)}`,
+      id: randomId,
       service: bookingDetails.service,
       date: bookingDetails.date,
       time: bookingDetails.time,
@@ -103,14 +106,15 @@ function CheckoutContent() {
     };
 
     const savedBookings = localStorage.getItem("userBookings");
-    let updated = savedBookings ? JSON.parse(savedBookings) : [];
+    const updated = savedBookings ? JSON.parse(savedBookings) : [];
     updated.unshift(newBooking);
     localStorage.setItem("userBookings", JSON.stringify(updated));
 
+    setConfirmedBookingId(randomId);
     setPaid(true);
   };
 
-  if (paid) return <PaymentSuccess bookingDetails={{ ...bookingDetails, price: String(finalPrice) }} />;
+  if (paid) return <PaymentSuccess bookingDetails={{ ...bookingDetails, price: String(finalPrice) }} bookingId={confirmedBookingId} />;
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950">
@@ -452,7 +456,7 @@ const StepPayment = ({ prev, onPay, price }: { prev: () => void; onPay: () => vo
   );
 };
 
-const PaymentSuccess = ({ bookingDetails }: any) => (
+const PaymentSuccess = ({ bookingDetails, bookingId }: any) => (
   <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 text-center">
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
@@ -475,7 +479,7 @@ const PaymentSuccess = ({ bookingDetails }: any) => (
         <CardContent className="p-6 space-y-4">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Booking ID</span>
-            <span className="font-bold">#OSM-{Math.floor(100000 + Math.random() * 900000)}</span>
+            <span className="font-bold">#{bookingId || "OSM-SUCCESS"}</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Service</span>
