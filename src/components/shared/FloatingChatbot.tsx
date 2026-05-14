@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { MessageCircle, Send, X, CheckCircle } from "lucide-react";
+import { MessageCircle, Send, X, CheckCircle, RefreshCw, CreditCard, Calendar, Clock, User } from "lucide-react";
+import { allServices } from "@/data/services";
 
 type Message = {
   id: string;
@@ -10,16 +11,34 @@ type Message = {
   isHtml?: boolean;
 };
 
+type ChatState = "IDLE" | "ASK_CATEGORY" | "ASK_SERVICE" | "ASK_TIME" | "ASK_CONFIRM";
+
+type BookingData = {
+  category: string;
+  service: string;
+  price: string;
+  time: string;
+};
+
+const CATEGORY_EMOJIS: Record<string, string> = {
+  "Cleaning": "🧹",
+  "Salon": "💇‍♀️",
+  "Repairs": "🛠️",
+  "Moving": "📦",
+  "Laptops": "💻",
+  "Mobiles": "📱"
+};
+
 export function FloatingChatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [inputText, setInputText] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [chatState, setChatState] = useState<"IDLE" | "ASK_SERVICE" | "ASK_TIME" | "ASK_CONFIRM">("IDLE");
-  const [bookingData, setBookingData] = useState({ service: "", time: "" });
+  const [chatState, setChatState] = useState<ChatState>("IDLE");
+  const [bookingData, setBookingData] = useState<BookingData>({ category: "", service: "", price: "", time: "" });
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome-1",
-      text: "👋 Hi! I'm your OSM AI Virtual Assistant. Ask me about pricing, refund guarantees, or type <strong>'book'</strong> to explore!",
+      text: "👋 Hi! I'm your OSM AI Virtual Assistant. Ask me about our 100% guarantee, prices, or type <strong>'book'</strong> to get started!",
       sender: "bot",
       isHtml: true,
     },
@@ -28,19 +47,27 @@ export function FloatingChatbot() {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll to bottom when messages change
+  // Auto-scroll to bottom
   useEffect(() => {
     if (chatEndRef.current) {
       chatEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages, isTyping]);
 
-  // Focus input field when chat is opened
+  // Focus input field when opened
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 200);
     }
   }, [isOpen]);
+
+  // Extracted categories dynamically from our actual service database
+  const uniqueCategories = Array.from(new Set(allServices.map((s) => s.category)));
+
+  // Get services matching selected category
+  const filteredServices = allServices.filter(
+    (s) => s.category.toLowerCase() === bookingData.category.toLowerCase()
+  );
 
   const addMessage = (text: string, sender: "user" | "bot", isHtml = false) => {
     const newMsg: Message = {
@@ -56,6 +83,19 @@ export function FloatingChatbot() {
     processInput(selectionText);
   };
 
+  const handleReset = () => {
+    setChatState("IDLE");
+    setBookingData({ category: "", service: "", price: "", time: "" });
+    setMessages([
+      {
+        id: `welcome-${Date.now()}`,
+        text: "🔄 Chat session reset. How can I help you today? Ask a question or type **'book'** to view our categories!",
+        sender: "bot",
+        isHtml: true,
+      },
+    ]);
+  };
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputText.trim()) return;
@@ -65,11 +105,9 @@ export function FloatingChatbot() {
   };
 
   const processInput = (text: string) => {
-    // Add user message immediately
     addMessage(text, "user");
     setIsTyping(true);
 
-    // Simulate response latency
     setTimeout(() => {
       setIsTyping(false);
       const lower = text.toLowerCase();
@@ -78,70 +116,102 @@ export function FloatingChatbot() {
       let newBookingData = { ...bookingData };
 
       if (chatState === "IDLE") {
-        if (lower.includes("book") || lower.includes("clean") || lower.includes("order") || lower.includes("service")) {
-          reply = `I can definitely help you schedule a visit! 📝 <br><br>Which service tier do you require?`;
-          newChatState = "ASK_SERVICE";
+        if (lower.includes("book") || lower.includes("order") || lower.includes("service") || lower.includes("hire")) {
+          reply = `Awesome! I can securely lock in a booking right here. 📑<br><br>Which service category are you looking for? Please tap one of our verified departments:`;
+          newChatState = "ASK_CATEGORY";
         } else if (lower.includes("cost") || lower.includes("price") || lower.includes("charge") || lower.includes("rate") || lower.includes("money")) {
-          reply = "Our diagnostic inspections start at a flat fixed ₹249, and Deep Cleaning begins at ₹1,299. Type **book** to initiate reserving a timeslot!";
-        } else if (lower.includes("refund") || lower.includes("guarantee") || lower.includes("policy")) {
-          reply = "We guarantee absolute quality. Persistent issues within 48 hours are subject to a complete rework or full money refund automatically.";
-        } else if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey")) {
-          reply = "Hi there! 👋 I'm your automated assistant. Type **book** to coordinate your professional doorstep service immediately.";
+          reply = "Our rates are 100% fixed and transparent! 💰 Basic diagnostics start at ₹249. Full Home Deep Cleaning starts at ₹1,999. Type **book** to explore all active rates dynamically.";
+        } else if (lower.includes("refund") || lower.includes("guarantee") || lower.includes("policy") || lower.includes("bad") || lower.includes("cancel")) {
+          reply = "🛡️ We back all sessions with a <strong>100% Quality Assurance</strong> guarantee. If our work fails metrics, we dispatch a free redo within 48 hours or initialize a full money refund back to your bank.";
+        } else if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey") || lower.includes("sup")) {
+          reply = "Hi there! 👋 I'm the OSM conversational agent, here to reclaim your time! Would you like to <strong>'book'</strong> a home expert right now?";
         } else {
-          reply = "Great question! You can trigger our seamless flow by tapping the <strong>'Book Clean'</strong> chip or typing **book**!";
+          reply = "That is an excellent question! As an advanced service assistant, I am fully capable of reserving your slots. Type **book** to browse all our categories live!";
         }
-      } else if (chatState === "ASK_SERVICE") {
-        if (lower.includes("clean")) newBookingData.service = "Deep Home Cleaning";
-        else if (lower.includes("salon")) newBookingData.service = "Salon at Home";
-        else if (lower.includes("ac") || lower.includes("repair") || lower.includes("appliance")) newBookingData.service = "AC & Appliance Repair";
-        else newBookingData.service = text;
+      } else if (chatState === "ASK_CATEGORY") {
+        // Resolve the category name (case-insensitive from unique list)
+        const matchedCategory = uniqueCategories.find(
+          (c) => c.toLowerCase() === lower || lower.includes(c.toLowerCase())
+        ) || text;
 
-        reply = `Selected: <strong>${newBookingData.service}</strong>.<br><br>🗓️ Which time slot works best for you tomorrow?`;
+        newBookingData.category = matchedCategory;
+        const emojis = CATEGORY_EMOJIS[matchedCategory] || "👉";
+        
+        reply = `Terrific! Selected ${emojis} <strong>${matchedCategory}</strong> department.<br><br>Which specific service would you like to reserve?`;
+        newChatState = "ASK_SERVICE";
+      } else if (chatState === "ASK_SERVICE") {
+        // Locate actual service row to fetch official prices
+        const matchedRow = allServices.find(
+          (s) => s.title.toLowerCase() === lower || lower.includes(s.title.toLowerCase()) || text.includes(s.title)
+        );
+
+        if (matchedRow) {
+          newBookingData.service = matchedRow.title;
+          newBookingData.price = matchedRow.price;
+        } else {
+          newBookingData.service = text;
+          newBookingData.price = "499 (Estimate)";
+        }
+
+        reply = `Got it! 📦 Selected <strong>${newBookingData.service}</strong>.<br>Cost: <strong>₹${newBookingData.price}</strong>.<br><br>🗓️ Select your preferred dispatch slot tomorrow:`;
         newChatState = "ASK_TIME";
       } else if (chatState === "ASK_TIME") {
         newBookingData.time = text;
-        reply = `Excellent. Let's finalize your order details:<br><br>
-        🛍️ Service: <strong>${newBookingData.service}</strong><br>
-        📅 Slot: <strong>${text}</strong><br>
-        🌍 Region: Bangalore Central Node<br><br>
-        Click below or type <strong>CONFIRM</strong> to instantly dispatch!`;
+        
+        reply = `<div class="space-y-2">
+          <div class="font-semibold text-indigo-200">🧾 Digital Order Preview</div>
+          <div class="space-y-1 border-l border-emerald-500 pl-2.5 my-2 text-[11px]">
+            <div class="text-slate-300">Category: <span class="text-white font-medium">${newBookingData.category}</span></div>
+            <div class="text-slate-300">Service: <span class="text-white font-medium">${newBookingData.service}</span></div>
+            <div class="text-slate-300">Slot: <span class="text-white font-medium">${text}</span></div>
+            <div class="text-emerald-400 font-semibold">Estimate: ₹${newBookingData.price}</div>
+          </div>
+          <div>Type <strong>CONFIRM</strong> or tap the checkmark below to dispatch!</div>
+        </div>`;
         newChatState = "ASK_CONFIRM";
       } else if (chatState === "ASK_CONFIRM") {
-        if (lower.includes("confirm") || lower.includes("yes")) {
+        if (lower.includes("confirm") || lower.includes("yes") || lower.includes("ok")) {
           const orderId = "OSMP-" + Math.floor(Math.random() * 90000 + 10000);
-          reply = `<div>
-            <h5 class="font-bold text-emerald-400 flex items-center gap-1 text-xs mb-1">
-              <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              ORDER CONFIRMED!
-            </h5>
-            <p class="text-[11px] text-slate-300 mb-2">Technician successfully scheduled.</p>
-            <div class="bg-slate-950/80 rounded-lg p-2.5 text-[10px] space-y-1 border border-white/5 font-mono text-slate-200">
-              <div>Ref: <strong>${orderId}</strong></div>
-              <div>Job: <strong>${bookingData.service}</strong></div>
-              <div>Slot: <strong>${bookingData.time}</strong></div>
+          reply = `<div class="bg-emerald-950/70 border border-emerald-500/40 p-4 rounded-2xl text-emerald-50 shadow-2xl">
+            <div class="flex items-center gap-2 text-xs font-bold text-emerald-400 mb-2.5">
+              <div class="flex h-2 w-2 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></div>
+              SUCCESS! ORDER SECURED
             </div>
-            <p class="text-[9px] text-emerald-400/80 mt-2">Senior Expert Anil Mishra has accepted. Live tracking opens 15m before arrival!</p>
+            
+            <p class="text-[10px] text-slate-200 leading-tight mb-3">Your dispatch order is processed and scheduled in our local system node.</p>
+            
+            <div class="bg-black/40 rounded-xl p-3 text-[10px] border border-white/10 space-y-1.5 font-mono">
+              <div class="flex justify-between"><span>Reference:</span> <strong class="text-white">${orderId}</strong></div>
+              <div class="flex justify-between"><span>Product:</span> <strong class="text-slate-200 max-w-[120px] truncate text-right">${bookingData.service}</strong></div>
+              <div class="flex justify-between"><span>Arrival Slot:</span> <strong class="text-slate-200">${bookingData.time}</strong></div>
+              <div class="flex justify-between text-emerald-300 font-bold border-t border-white/10 pt-1 mt-1"><span>Total Cost:</span> <span>₹${bookingData.price}</span></div>
+            </div>
+            
+            <div class="mt-3 text-[9px] text-emerald-200/80 leading-relaxed flex gap-1.5">
+              <span>🧑‍🔧</span>
+              <span>Vetted Expert <strong>Anil Mishra</strong> assigned. Real-time Leaflet GPS tracking begins 15 minutes before slot arrival!</span>
+            </div>
           </div>`;
         } else {
-          reply = "Understood. The booking request has been cleared. How else can I help? Type **'book'** to start anew!";
+          reply = "Draft cancelled. No bookings were created. Let me know if you need assistance with anything else!";
         }
         newChatState = "IDLE";
-        newBookingData = { service: "", time: "" };
+        newBookingData = { category: "", service: "", price: "", time: "" };
       }
 
       setChatState(newChatState);
       setBookingData(newBookingData);
       addMessage(reply, "bot", true);
-    }, 1100);
+    }, 1000);
   };
 
   return (
     <div className="fixed bottom-6 left-6 z-50 pointer-events-auto select-none">
-      {/* Floating WhatsApp Trigger Button */}
+      {/* Floating Trigger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center h-14 w-14 rounded-full bg-[#25D366] hover:bg-[#22c35e] shadow-lg shadow-green-600/20 hover:shadow-green-600/40 transition-all duration-300 hover:scale-110 focus:outline-none ring-2 ring-offset-2 ring-offset-slate-950 ring-transparent focus:ring-[#25D366]/50"
-        aria-label="Toggle support chat"
+        className="flex items-center justify-center h-14 w-14 rounded-full bg-[#25D366] hover:bg-[#22c35e] shadow-lg shadow-green-600/30 hover:shadow-green-600/50 transition-all duration-300 hover:scale-110 focus:outline-none ring-2 ring-offset-2 ring-offset-slate-950 ring-transparent focus:ring-[#25D366]/50"
+        aria-label="Support and Conversational Assistant"
       >
         {isOpen ? (
           <X className="h-6 w-6 text-white animate-in fade-in duration-300" />
@@ -152,48 +222,62 @@ export function FloatingChatbot() {
         )}
       </button>
 
-      {/* Active Chat Window */}
+      {/* Chat Window Drawer */}
       <div
-        className={`absolute bottom-20 left-0 w-[340px] flex flex-col bg-slate-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-left z-50 ${
+        className={`absolute bottom-20 left-0 w-[350px] flex flex-col bg-slate-900 border border-white/10 rounded-3xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-left z-50 ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-75 translate-y-10 pointer-events-none"
         }`}
       >
-        {/* Header */}
-        <div className="bg-[#075E54] p-4 flex items-center justify-between text-white">
+        {/* Top Header */}
+        <div className="bg-[#075E54] p-4 flex items-center justify-between text-white border-b border-black/10">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-[#075E54] font-bold border border-white text-sm">
+            <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center text-[#075E54] font-bold border-2 border-white shadow text-sm relative">
               AI
+              <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#25D366] rounded-full border border-white"></div>
             </div>
             <div>
-              <h4 className="font-bold text-sm tracking-tight">OSM AI Assistant</h4>
-              <div className="flex items-center text-[10px] text-emerald-200 gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
-                Active Support Agent
+              <h4 className="font-bold text-sm tracking-tight leading-none mb-1">OSM AI Assistant</h4>
+              <div className="flex items-center text-[10px] text-emerald-100 gap-1">
+                <span>● Online</span>
+                <span className="opacity-50">|</span>
+                <span>Replies instantly</span>
               </div>
             </div>
           </div>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="text-emerald-200/70 hover:text-white transition-colors"
-          >
-            <X className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={handleReset}
+              title="Reset Chat"
+              className="p-1.5 text-emerald-100 hover:bg-black/10 rounded-full transition-all"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+            </button>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="p-1.5 text-emerald-100 hover:bg-black/10 rounded-full transition-all"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
-        {/* Message Timeline */}
-        <div className="flex-1 h-[300px] p-4 space-y-3 overflow-y-auto bg-slate-900 border-b border-white/5 custom-scrollbar">
+        {/* Messages History Canvas */}
+        <div className="flex-1 h-[320px] p-4 space-y-3 overflow-y-auto bg-[#0b141a] border-b border-white/5 custom-scrollbar relative">
+          {/* Subtle WhatsApp-like subtle pattern backdrop */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex relative z-10 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
-                className={`max-w-[85%] p-3 text-xs rounded-2xl leading-relaxed select-text ${
+                className={`max-w-[85%] p-3 text-xs rounded-xl leading-relaxed select-text shadow-md ${
                   msg.sender === "user"
                     ? "bg-[#054D44] text-emerald-50 rounded-tr-none"
-                    : "bg-slate-800 text-slate-100 rounded-tl-none"
+                    : "bg-[#202c33] text-slate-100 rounded-tl-none border border-white/5"
                 }`}
               >
                 {msg.isHtml ? (
@@ -205,73 +289,96 @@ export function FloatingChatbot() {
             </div>
           ))}
 
-          {/* Interactive Chat Buttons depending on chatbot state */}
-          {!isTyping && chatState === "ASK_SERVICE" && (
-            <div className="flex flex-wrap gap-1.5 mt-1">
-              <button
-                onClick={() => handleActionClick("Deep Home Cleaning")}
-                className="text-[10px] text-indigo-300 border border-indigo-500/30 bg-indigo-950/30 hover:bg-indigo-600 hover:text-white px-2 py-1 rounded-lg transition-all"
-              >
-                🏠 Cleaning
-              </button>
-              <button
-                onClick={() => handleActionClick("Salon at Home")}
-                className="text-[10px] text-pink-300 border border-pink-500/30 bg-pink-950/30 hover:bg-pink-600 hover:text-white px-2 py-1 rounded-lg transition-all"
-              >
-                💇‍♀️ Salon
-              </button>
-              <button
-                onClick={() => handleActionClick("AC & Repair")}
-                className="text-[10px] text-teal-300 border border-teal-500/30 bg-teal-950/30 hover:bg-teal-600 hover:text-white px-2 py-1 rounded-lg transition-all"
-              >
-                🛠️ Appliance
-              </button>
+          {/* Interactive Selection Action Trees inside timeline */}
+          
+          {/* STEP 1: CHOOSE CATEGORY */}
+          {!isTyping && chatState === "ASK_CATEGORY" && (
+            <div className="flex flex-wrap gap-2 mt-1 relative z-10">
+              {uniqueCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleActionClick(cat)}
+                  className="text-[10px] text-indigo-100 border border-indigo-500/20 bg-indigo-900/30 hover:bg-indigo-600 hover:border-indigo-400 px-3 py-1.5 rounded-xl transition-all shadow-sm active:scale-95 flex items-center gap-1.5"
+                >
+                  <span>{CATEGORY_EMOJIS[cat] || "👉"}</span>
+                  <span>{cat}</span>
+                </button>
+              ))}
             </div>
           )}
 
+          {/* STEP 2: CHOOSE SUB-SERVICE (FILTETED) */}
+          {!isTyping && chatState === "ASK_SERVICE" && (
+            <div className="grid grid-cols-1 gap-2 mt-1 relative z-10">
+              {filteredServices.map((serv) => (
+                <button
+                  key={serv.id}
+                  onClick={() => handleActionClick(serv.title)}
+                  className="text-left text-[10px] border border-white/5 bg-[#202c33]/80 hover:bg-indigo-900/50 hover:border-indigo-500/30 p-2.5 rounded-xl transition-all shadow-sm flex items-center justify-between group"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-slate-100 truncate group-hover:text-white">{serv.title}</div>
+                    <div className="text-[9px] text-slate-400 flex items-center gap-1">
+                      <span>⏱️ {serv.duration}</span>
+                      <span>•</span>
+                      <span>⭐ {serv.rating}</span>
+                    </div>
+                  </div>
+                  <div className="text-emerald-400 font-bold text-xs pl-2">₹{serv.price}</div>
+                </button>
+              ))}
+              {filteredServices.length === 0 && (
+                <div className="text-[10px] text-slate-400 italic">No nested services defined. Type raw request.</div>
+              )}
+            </div>
+          )}
+
+          {/* STEP 3: CHOOSE TIMESLOT */}
           {!isTyping && chatState === "ASK_TIME" && (
-            <div className="flex flex-wrap gap-1.5 mt-1">
+            <div className="flex flex-wrap gap-2 mt-1 relative z-10">
               <button
                 onClick={() => handleActionClick("9:00 AM (Morning)")}
-                className="text-[10px] text-slate-200 border border-white/10 bg-slate-800 hover:bg-indigo-600 px-2.5 py-1 rounded-lg"
+                className="text-[10px] text-slate-100 border border-white/10 bg-[#202c33] hover:bg-indigo-900 hover:border-indigo-500/50 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm"
               >
-                🌅 9 AM
+                <Clock className="h-3 w-3 text-indigo-300" /> 🌅 Morning (9 AM)
               </button>
               <button
                 onClick={() => handleActionClick("2:00 PM (Afternoon)")}
-                className="text-[10px] text-slate-200 border border-white/10 bg-slate-800 hover:bg-indigo-600 px-2.5 py-1 rounded-lg"
+                className="text-[10px] text-slate-100 border border-white/10 bg-[#202c33] hover:bg-indigo-900 hover:border-indigo-500/50 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm"
               >
-                ☀️ 2 PM
+                <Clock className="h-3 w-3 text-orange-300" /> ☀️ Afternoon (2 PM)
               </button>
               <button
                 onClick={() => handleActionClick("6:00 PM (Evening)")}
-                className="text-[10px] text-slate-200 border border-white/10 bg-slate-800 hover:bg-indigo-600 px-2.5 py-1 rounded-lg"
+                className="text-[10px] text-slate-100 border border-white/10 bg-[#202c33] hover:bg-indigo-900 hover:border-indigo-500/50 px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-sm"
               >
-                🌆 6 PM
+                <Clock className="h-3 w-3 text-purple-300" /> 🌆 Evening (6 PM)
               </button>
             </div>
           )}
 
+          {/* STEP 4: FINAL CONFIRMATION */}
           {!isTyping && chatState === "ASK_CONFIRM" && (
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 relative z-10">
               <button
                 onClick={() => handleActionClick("CONFIRM")}
-                className="flex items-center gap-1 text-[10px] text-white bg-emerald-600 hover:bg-emerald-500 font-bold px-3 py-1.5 rounded-lg shadow"
+                className="flex items-center gap-1.5 text-[10px] text-white bg-emerald-600 hover:bg-emerald-500 font-bold px-4 py-2 rounded-xl shadow-md active:scale-95 transition-all"
               >
-                <CheckCircle className="h-3 w-3" /> CONFIRM
+                <CheckCircle className="h-3.5 w-3.5" /> CONFIRM DISPATCH
               </button>
               <button
                 onClick={() => handleActionClick("CANCEL")}
-                className="text-[10px] text-slate-300 border border-white/10 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg"
+                className="text-[10px] text-slate-200 border border-white/10 bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl shadow-sm"
               >
                 Cancel
               </button>
             </div>
           )}
 
+          {/* Typing bubble */}
           {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-slate-800 p-3 rounded-2xl rounded-tl-none flex items-center space-x-1 h-8">
+            <div className="flex justify-start relative z-10">
+              <div className="bg-[#202c33] border border-white/5 px-3.5 py-2.5 rounded-xl rounded-tl-none flex items-center space-x-1 h-8 shadow-md">
                 <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></span>
                 <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
                 <span className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0.3s" }}></span>
@@ -281,46 +388,48 @@ export function FloatingChatbot() {
           <div ref={chatEndRef} />
         </div>
 
-        {/* Bottom Shortcuts Context Chips (Only in idle) */}
+        {/* Quick Help Shortcut Context Chips (Shown during IDLE) */}
         {chatState === "IDLE" && (
-          <div className="p-2 border-t border-white/5 bg-slate-950 flex flex-wrap gap-1.5">
+          <div className="p-2.5 border-t border-white/5 bg-[#111b21] flex flex-wrap gap-2">
             <button
-              onClick={() => handleActionClick("What are deep cleaning rates?")}
-              className="text-[9px] text-slate-400 hover:text-white border border-white/5 bg-white/5 hover:bg-white/10 px-2 py-1 rounded-full transition-colors"
+              onClick={() => handleActionClick("Start Booking Process")}
+              className="text-[9px] text-emerald-300 hover:text-emerald-100 border border-emerald-500/20 bg-emerald-950/30 hover:bg-emerald-900/40 px-2.5 py-1 rounded-full transition-colors flex items-center gap-1"
             >
-              💰 Check Rates
+              <span>⚡</span> <span>Instant Booking</span>
             </button>
             <button
-              onClick={() => handleActionClick("Start Booking")}
-              className="text-[9px] text-slate-400 hover:text-white border border-white/5 bg-white/5 hover:bg-white/10 px-2 py-1 rounded-full transition-colors"
+              onClick={() => handleActionClick("What is your 48-hour guarantee?")}
+              className="text-[9px] text-slate-300 hover:text-white border border-white/5 bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
             >
-              📝 Book Visit
+              🛡️ Money-Back Guarantee
             </button>
             <button
-              onClick={() => handleActionClick("What is your refund policy?")}
-              className="text-[9px] text-slate-400 hover:text-white border border-white/5 bg-white/5 hover:bg-white/10 px-2 py-1 rounded-full transition-colors"
+              onClick={() => handleActionClick("How much is deep cleaning?")}
+              className="text-[9px] text-slate-300 hover:text-white border border-white/5 bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
             >
-              🛡️ Refund Coverage
+              💰 View Base Rates
             </button>
           </div>
         )}
 
-        {/* Input form */}
-        <form onSubmit={handleFormSubmit} className="p-3 bg-slate-950 border-t border-white/10 flex items-center gap-2">
-          <input
-            type="text"
-            ref={inputRef}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Type to book or ask questions..."
-            className="flex-1 min-w-0 bg-white/5 border border-white/10 focus:border-[#25D366] text-white px-4 py-2 rounded-full text-xs outline-none focus:ring-1 focus:ring-[#25D366]/40 transition-all"
-          />
+        {/* Chat Text Input form */}
+        <form onSubmit={handleFormSubmit} className="p-3.5 bg-[#111b21] border-t border-white/5 flex items-center gap-2">
+          <div className="flex-1 relative bg-[#202c33] rounded-full border border-white/10 focus-within:border-[#00a884] transition-all flex items-center px-3">
+            <input
+              type="text"
+              ref={inputRef}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+              placeholder="Ask rates or type 'book'..."
+              className="flex-1 min-w-0 bg-transparent text-white py-2 text-xs outline-none select-text placeholder-slate-400"
+            />
+          </div>
           <button
             type="submit"
             disabled={!inputText.trim()}
-            className="flex-shrink-0 h-8 w-8 rounded-full bg-[#075E54] hover:bg-emerald-600 disabled:bg-slate-800 text-white disabled:text-slate-600 flex items-center justify-center shadow-lg transition-all outline-none focus:ring-2 focus:ring-emerald-600/50"
+            className="flex-shrink-0 h-9 w-9 rounded-full bg-[#00a884] hover:bg-[#008f72] disabled:bg-slate-800 text-white disabled:text-slate-600 flex items-center justify-center shadow-md active:scale-95 transition-all outline-none"
           >
-            <Send className="h-3.5 w-3.5 transform rotate-45 -translate-x-0.5" />
+            <Send className="h-4 w-4 transform rotate-45 -translate-x-0.5" />
           </button>
         </form>
       </div>
