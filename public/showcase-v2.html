@@ -696,7 +696,10 @@
             else { modal.style.opacity=0; modal.style.pointerEvents="none"; }
         }
 
-        // B. Interactive Live Chat (Simulated AI)
+        // B. Interactive Live Chat (Simulated AI State-Driven Booking Engine)
+        let chatState = "IDLE"; // IDLE, ASK_SERVICE, ASK_TIME, ASK_CONFIRM
+        let bookingData = { service: "", time: "" };
+
         function toggleChatWindow() {
             const win = document.getElementById("chat-window");
             const isOpen = win.classList.contains("opacity-0");
@@ -740,20 +743,86 @@
             log.appendChild(tInd);
             log.scrollTop = log.scrollHeight;
 
-            // Simulated response payload (Mock AI GPT logic with keywords fallback)
+            // Simulated dynamic response payload (Mock AI GPT booking flow logic)
             setTimeout(() => {
                 tInd.remove();
                 const lower = text.toLowerCase();
-                let reply = "That's a great inquiry! As a simulated GPT assistant, I analyzed your text. Our premium network is completely fully insured and vetted. To explore further details, please tap our quick action buttons above!";
+                let reply = "";
                 
-                if (lower.includes("cost") || lower.includes("price") || lower.includes("charge") || lower.includes("rate") || lower.includes("money")) {
-                    reply = "Our AC/Appliance base inspections start at fixed diagnostics (₹249). Spare parts needed are applied through standard rate cards inside the dashboard.";
-                } else if (lower.includes("refund") || lower.includes("guarantee") || lower.includes("bad") || lower.includes("policy")) {
-                    reply = "Our 100% Satisfaction warranty covers free redo bookings. If issues remain unresolved within 48 hours, we issue a bank refund instantly.";
-                } else if (lower.includes("book") || lower.includes("clean") || lower.includes("order") || lower.includes("service")) {
-                    reply = "Booking is fast! Select your service on the grid or let me know which PIN code you'd like available timeslots checked for.";
-                } else if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey")) {
-                    reply = "Hi there! I am the OSMP virtual assistant. How can I help you reclaim your time today? Try asking about costs or bookings!";
+                // State machine logic
+                if (chatState === "IDLE") {
+                    if (lower.includes("book") || lower.includes("clean") || lower.includes("order") || lower.includes("service")) {
+                        reply = `I can definitely help you schedule a visit! 📝 <br><br>Which service tier do you require?<br>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <button onclick="sendMockMessage('Deep Home Cleaning')" class="bg-indigo-950/50 border border-indigo-500/30 text-[10px] text-slate-200 px-2.5 py-1 rounded-lg">🏠 Cleaning</button>
+                            <button onclick="sendMockMessage('Salon at Home')" class="bg-pink-950/50 border border-pink-500/30 text-[10px] text-slate-200 px-2.5 py-1 rounded-lg">💇‍♀️ Salon</button>
+                            <button onclick="sendMockMessage('AC & Repair')" class="bg-teal-950/50 border border-teal-500/30 text-[10px] text-slate-200 px-2.5 py-1 rounded-lg">🛠️ AC/Appliance</button>
+                        </div>`;
+                        chatState = "ASK_SERVICE";
+                    } else if (lower.includes("cost") || lower.includes("price") || lower.includes("charge") || lower.includes("rate") || lower.includes("money")) {
+                        reply = "Our diagnostic fee starts at ₹249, and Deep Cleaning begins at ₹1,299. I can set up a booking immediately! Type **book** to get started.";
+                    } else if (lower.includes("refund") || lower.includes("guarantee") || lower.includes("policy")) {
+                        reply = "We cover all bookings with a 100% Satisfaction Warranty. In case of persistent issues within 48 hours, you will receive a full refund!";
+                    } else if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey")) {
+                        reply = "Hi there! 👋 I am the OSMP conversational agent. Would you like to explore rates or type **'book'** to reserve a timeslot?";
+                    } else {
+                        reply = "Great inquiry! As a smart agent, I recommend typing **'book'** to test our instantaneous booking flow mechanism!";
+                    }
+                } 
+                else if (chatState === "ASK_SERVICE") {
+                    // Parse chosen service
+                    if (lower.includes("clean")) bookingData.service = "Deep Home Cleaning";
+                    else if (lower.includes("salon")) bookingData.service = "Salon at Home";
+                    else if (lower.includes("ac") || lower.includes("repair")) bookingData.service = "AC & Appliance Repair";
+                    else bookingData.service = text;
+
+                    reply = `Selected: <strong>${bookingData.service}</strong>.<br><br>🗓️ Which time slot works best for your appointment tomorrow?<br>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                        <button onclick="sendMockMessage('9:00 AM (Morning)')" class="bg-slate-700 hover:bg-indigo-900 text-[10px] text-white px-2.5 py-1 rounded-lg border border-white/10">🌅 9:00 AM</button>
+                        <button onclick="sendMockMessage('2:00 PM (Afternoon)')" class="bg-slate-700 hover:bg-indigo-900 text-[10px] text-white px-2.5 py-1 rounded-lg border border-white/10">☀️ 2:00 PM</button>
+                        <button onclick="sendMockMessage('6:00 PM (Evening)')" class="bg-slate-700 hover:bg-indigo-900 text-[10px] text-white px-2.5 py-1 rounded-lg border border-white/10">🌆 6:00 PM</button>
+                    </div>`;
+                    chatState = "ASK_TIME";
+                } 
+                else if (chatState === "ASK_TIME") {
+                    bookingData.time = text;
+
+                    reply = `Excellent. Let's finalize your order details:<br><br>
+                    🛍️ Service: <strong>${bookingData.service}</strong><br>
+                    📅 Slot: <strong>${bookingData.time}</strong><br>
+                    🌍 Region: Bangalore Central Node<br><br>
+                    Type <strong>CONFIRM</strong> to instantly dispatch our nearest vetted pro!
+                    <div class="flex gap-2 mt-3">
+                        <button onclick="sendMockMessage('CONFIRM')" class="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] px-4 py-1.5 rounded-lg font-bold font-outfit shadow">✔️ CONFIRM</button>
+                        <button onclick="sendMockMessage('CANCEL')" class="bg-slate-700 text-slate-200 text-[10px] px-4 py-1.5 rounded-lg border border-white/5">Cancel</button>
+                    </div>`;
+                    chatState = "ASK_CONFIRM";
+                } 
+                else if (chatState === "ASK_CONFIRM") {
+                    if (lower.includes("confirm") || lower.includes("yes")) {
+                        const orderId = "OSMP-" + Math.floor(Math.random() * 90000 + 10000);
+                        reply = `<div class="bg-emerald-950/60 border border-emerald-500/30 p-4 rounded-2xl text-emerald-50 mt-1 shadow-inner">
+                            <h5 class="font-bold font-outfit flex items-center text-[11px] text-emerald-400 mb-1.5 gap-1.5">
+                                <span class="flex h-2 w-2 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span>
+                                ORDER CONFIRMED!
+                            </h5>
+                            <p class="text-[10px] text-slate-300 leading-tight mb-3">Your professional home visit has been locked in our live systems tier.</p>
+                            
+                            <div class="bg-black/30 rounded-xl p-3 text-[10px] space-y-1 font-mono border border-white/5 mb-2">
+                                <div>Ref: <strong class="text-white">${orderId}</strong></div>
+                                <div>Job: <strong class="text-slate-200">${bookingData.service}</strong></div>
+                                <div>Time: <strong class="text-slate-200">${bookingData.time}</strong></div>
+                                <div>Status: <strong class="text-emerald-400">Technician Assigned</strong></div>
+                            </div>
+                            
+                            <p class="text-[9px] text-emerald-300/80 leading-relaxed">Our Senior Pro, Anil Mishra, has accepted your request. Track his live approach in real-time via the "My Booking" portal above!</p>
+                        </div>`;
+                    } else {
+                        reply = "No problem, the booking draft has been cleared. How else can I assist? You can say **book** anytime to restart.";
+                    }
+                    // Clear cache/Reset state
+                    chatState = "IDLE";
+                    bookingData = { service: "", time: "" };
                 }
 
                 const aBubble = document.createElement("div");
@@ -761,7 +830,7 @@
                 aBubble.innerHTML = `<div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">${reply}</div>`;
                 log.appendChild(aBubble);
                 log.scrollTop = log.scrollHeight;
-            }, 1200);
+            }, 1100);
         }
 
         // C. LIVE GPS TRACKING SIMULATOR (Leaflet)
