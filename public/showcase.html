@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSMP Services | Premium Home Services Redefined</title>
+    <meta name="description" content="Reclaim your time with OSMP Services. Top-rated, vetted professionals for cleaning, salon, and repairs. 100% Quality Guaranteed.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        dark: {
+                            950: '#030712',
+                            900: '#0f172a',
+                            800: '#1e293b',
+                        },
+                        accent: {
+                            teal: '#14b8a6',
+                            rose: '#f43f5e',
+                            amber: '#f59e0b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styling for Performance & Modern Effects -->
+    <style>
+        /* Will-change hinting for high-performance GSAP renders */
+        .gsap-reveal {
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        
+        /* Glassmorphism helper utility classes */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px border rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-nav {
+            background: rgba(3, 7, 18, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .glass-nav.scrolled {
+            background: rgba(3, 7, 18, 0.92);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Custom Gradient text definitions */
+        .text-gradient-vibrant {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-cool {
+            background: linear-gradient(135deg, #14b8a6 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Image Hover Zoom Custom Effect */
+        .hover-zoom-img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .service-card:hover .hover-zoom-img {
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar styling for premium aesthetic */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 5px;
+            border: 2px solid #030712;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+
+        /* Loading Spinner Utility */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #030712;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease;
+        }
+
+        /* Buttons Ripple Effect */
+        .btn-ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Respect Prefers-Reduced-Motion settings */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .gsap-reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        /* Three.js background canvas container */
+        #threejs-canvas-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        @media(max-width: 1024px) {
+            #threejs-canvas-container {
+                width: 100%;
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-slate-200 font-sans antialiased overflow-x-hidden">
+
+    <!-- Loading SVG Spinner Overlay -->
+    <div id="page-loader">
+        <div class="flex flex-col items-center justify-center space-y-6">
+            <!-- Lightweight Premium SVG Loader -->
+            <svg class="animate-spin h-16 w-16 text-primary-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-label="Loading application">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="text-slate-400 font-outfit font-medium tracking-widest uppercase text-xs animate-pulse">OSMP Services Loading...</p>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header>
+        <nav id="main-nav" class="fixed top-0 inset-x-0 z-50 px-6 py-4 glass-nav">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg px-2 py-1">
+                    <div class="h-10 w-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center shadow-lg text-white font-extrabold text-xl font-outfit">
+                        O
+                    </div>
+                    <span class="font-outfit font-black text-xl tracking-tight text-white">OSMP <span class="text-primary-500 font-medium">Services</span></span>
+                </a>
+
+                <!-- Navigation Links (Desktop) -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#why-choose-us" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">Why Us</a>
+                    <a href="#services" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">Services</a>
+                    <a href="#how-it-works" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">How It Works</a>
+                    <a href="#testimonials" class="text-sm font-semibold text-slate-300 hover:text-white transition-colors">Reviews</a>
+                </div>
+
+                <!-- Dynamic CTA & Search Area -->
+                <div class="flex items-center space-x-4">
+                    <!-- Personalized Location Badge (Dynamic injection) -->
+                    <div id="geo-badge" class="hidden md:flex items-center space-x-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full text-xs text-slate-300 transition-all">
+                        <span class="flex h-2 w-2 relative">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-teal opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-accent-teal"></span>
+                        </span>
+                        <span id="geo-badge-text">Detecting Location...</span>
+                    </div>
+                    
+                    <a href="#services" class="btn-ripple bg-primary-600 hover:bg-primary-500 text-white font-bold text-sm py-2.5 px-5 rounded-xl transition-colors shadow-lg shadow-primary-900/30 hidden sm:block focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-950 focus:ring-primary-500 outline-none">
+                        Book Service
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 bg-slate-950">
+        <!-- Three.js 3D Element Container -->
+        <div id="threejs-canvas-container"></div>
+
+        <!-- Ambient Glow Background Elements -->
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary-900/20 blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-10 right-1/3 w-[300px] h-[300px] rounded-full bg-purple-900/20 blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 lg:px-12 relative z-10 flex items-center h-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+                
+                <!-- Hero Text Block -->
+                <div class="lg:col-span-7 space-y-8">
+                    <!-- Trusted Marker -->
+                    <div class="gsap-hero-reveal inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs sm:text-sm font-semibold text-indigo-300 tracking-wide shadow-md">
+                        <svg class="h-4 w-4 text-accent-amber fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span>Trusted by Over 50,000+ Happy Customers</span>
+                    </div>
+
+                    <!-- Headline with emotional impact -->
+                    <h1 id="hero-headline" class="font-outfit font-black text-5xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05] drop-shadow-xl">
+                        Reclaim Your Time, <br>
+                        <span class="text-gradient-vibrant">We'll Handle The Rest.</span>
+                    </h1>
+
+                    <!-- Subheadline & Dynamic Personalization Message -->
+                    <div class="gsap-hero-reveal space-y-3 max-w-2xl">
+                        <p class="text-slate-300 text-lg sm:text-xl leading-relaxed">
+                            Stop chasing unreliable contractors. From meticulous deep cleaning to instant emergency repairs, OSMP delivers top-rated, certified experts directly to your door.
+                        </p>
+                        <!-- Dynamic Geo Message -->
+                        <p id="geo-personalized-msg" class="text-accent-teal font-semibold text-base flex items-center space-x-2 transition-all">
+                            <!-- Script inserts text here -->
+                        </p>
+                    </div>
+
+                    <!-- Action / Booking Box -->
+                    <div class="gsap-hero-reveal flex flex-col sm:flex-row items-stretch gap-4 max-w-xl">
+                        <div class="flex-1 relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <input type="text" placeholder="What service are you looking for?" aria-label="Search Services" class="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent backdrop-blur-md text-sm sm:text-base transition-all">
+                        </div>
+                        <button onclick="window.location='#services'" class="btn-ripple bg-primary-600 hover:bg-primary-500 text-white font-bold py-4 px-8 rounded-2xl transition-colors shadow-xl shadow-primary-900/30 font-outfit text-base outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 focus:ring-primary-500 whitespace-nowrap">
+                            Search Now
+                        </button>
+                    </div>
+
+                    <!-- Quality Indicators -->
+                    <div class="gsap-hero-reveal flex flex-wrap gap-6 pt-4 text-slate-400 text-sm font-medium">
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            <span>100% Quality Guarantee</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>Arrive in 15 Mins or Discounted</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visualization (Secondary Side for Mobiles as background is Canvas) -->
+                <div class="hidden lg:block lg:col-span-5">
+                    <!-- Purposefully left transparent to let Three.js element shine & catch visual focus -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- "Why Choose Us" - Trust & Vetting Process Section -->
+    <section id="why-choose-us" class="relative py-24 bg-dark-900/30 border-y border-white/5">
+        <div class="container mx-auto px-6">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="gsap-reveal font-outfit font-black text-4xl md:text-5xl text-white tracking-tight">
+                    Designed for Unmatched <span class="text-gradient-cool">Trust & Excellence</span>
+                </h2>
+                <p class="gsap-reveal text-slate-400 text-lg">
+                    We don't just offer services. We engineer security, timeliness, and satisfaction directly into your domestic experience.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <!-- Verified Professionals - 4 step card -->
+                <div class="gsap-reveal glass-card p-8 rounded-3xl space-y-6 border border-white/10 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 h-32 w-32 bg-primary-500/10 rounded-full blur-2xl group-hover:bg-primary-500/20 transition-all"></div>
+                    
+                    <div class="h-12 w-12 bg-primary-600/20 rounded-2xl flex items-center justify-center text-primary-500">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    
+                    <h3 class="font-outfit font-bold text-2xl text-white">Vetted Professionals</h3>
+                    
+                    <!-- 4-Step Detail List -->
+                    <div class="space-y-4 relative z-10">
+                        <div class="flex gap-3 items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-primary-600/30 border border-primary-500/50 text-xs font-bold rounded-full flex items-center justify-center text-primary-300">1</span>
+                            <p class="text-sm text-slate-300"><span class="font-semibold text-white">Stringent Identity Verification:</span> Comprehensive Aadhaar/ID and legal background checks.</p>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-primary-600/30 border border-primary-500/50 text-xs font-bold rounded-full flex items-center justify-center text-primary-300">2</span>
+                            <p class="text-sm text-slate-300"><span class="font-semibold text-white">Deep Skills Assessment:</span> Specialized hands-on tests to match highest technical standards.</p>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-primary-600/30 border border-primary-500/50 text-xs font-bold rounded-full flex items-center justify-center text-primary-300">3</span>
+                            <p class="text-sm text-slate-300"><span class="font-semibold text-white">Etiquette Training:</span> Comprehensive modules on soft skills and hospitality protocol.</p>
+                        </div>
+                        <div class="flex gap-3 items-start">
+                            <span class="flex-shrink-0 h-6 w-6 bg-primary-600/30 border border-primary-500/50 text-xs font-bold rounded-full flex items-center justify-center text-primary-300">4</span>
+                            <p class="text-sm text-slate-300"><span class="font-semibold text-white">Continuous Audits:</span> Regular user-rating audits; consistently retaining only 4.8+ star ratings.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Guarantee 1: On-Time -->
+                <div class="gsap-reveal glass-card p-8 rounded-3xl space-y-6 border border-white/10 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 h-32 w-32 bg-teal-500/10 rounded-full blur-2xl group-hover:bg-teal-500/20 transition-all"></div>
+                    
+                    <div class="h-12 w-12 bg-accent-teal/20 rounded-2xl flex items-center justify-center text-accent-teal">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    
+                    <h3 class="font-outfit font-bold text-2xl text-white">On-Time Guarantee</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Time is non-renewable. That's why we guarantee our arrivals. If our professional is outside of your scheduled 15-minute window, you instantly receive a **₹150 Credit** directly applied to your booking. No complex complaints, no arguing, just prompt service every time.
+                    </p>
+                </div>
+
+                <!-- Guarantee 2: Quality -->
+                <div class="gsap-reveal glass-card p-8 rounded-3xl space-y-6 border border-white/10 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 h-32 w-32 bg-rose-500/10 rounded-full blur-2xl group-hover:bg-rose-500/20 transition-all"></div>
+                    
+                    <div class="h-12 w-12 bg-accent-rose/20 rounded-2xl flex items-center justify-center text-accent-rose">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    
+                    <h3 class="font-outfit font-bold text-2xl text-white">Quality Assurance</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Our job isn't done until you are thrilled. Every service is backed by a **100% Satisfaction Coverage**. Not fully satisfied with the work? Let us know within 48 hours and we will coordinate an expedited re-work absolutely free of charge, or process a full refund.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Service Cards Section -->
+    <section id="services" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="gsap-reveal font-outfit font-black text-4xl md:text-5xl text-white tracking-tight">
+                    Premium Services, <span class="text-gradient-vibrant">Guaranteed Satisfaction</span>
+                </h2>
+                <p class="gsap-reveal text-slate-400 text-lg">
+                    Book pre-vetted professionals for customized solutions with straightforward pricing.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+                <!-- Card 1: Deep Cleaning -->
+                <div class="gsap-reveal flex flex-col bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl service-card transition-all hover:shadow-[0_20px_50px_rgba(79,70,229,0.15)] group cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <!-- Badge -->
+                        <div class="absolute top-4 right-4 bg-primary-600 text-white px-3 py-1 rounded-full text-xs font-bold z-10">Popular</div>
+                        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=800" alt="Deep cleaning of a modern house" width="800" height="560" loading="lazy" class="w-full h-full object-cover hover-zoom-img">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-1 space-y-6 relative">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="font-outfit font-extrabold text-2xl text-white group-hover:text-primary-400 transition-colors">Home Deep Cleaning</h3>
+                                <p class="text-slate-400 text-sm">Meticulous sterilization for all spaces.</p>
+                            </div>
+                            <div class="bg-primary-600/20 p-3 rounded-2xl text-primary-400">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 pt-4 border-t border-white/5">
+                            <span class="text-2xl font-black font-outfit text-white">₹1,299</span>
+                            <span class="text-sm text-slate-500 line-through font-medium">₹1,999</span>
+                            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider bg-emerald-500/10 px-2 py-1 rounded-md">Save 35%</span>
+                        </div>
+
+                        <button class="btn-ripple w-full bg-white/10 hover:bg-primary-600 text-white group-hover:text-white font-bold py-4 rounded-2xl text-center transition-all shadow-lg font-outfit focus:outline-none focus:ring-2 focus:ring-primary-500 outline-none">
+                            Book Cleaning Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Salon at Home -->
+                <div class="gsap-reveal flex flex-col bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl service-card transition-all hover:shadow-[0_20px_50px_rgba(236,72,153,0.15)] group cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?auto=format&fit=crop&q=80&w=800" alt="Premium Spa and Salon Treatment" width="800" height="560" loading="lazy" class="w-full h-full object-cover hover-zoom-img">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-1 space-y-6">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="font-outfit font-extrabold text-2xl text-white group-hover:text-pink-400 transition-colors">Salon & Spa at Home</h3>
+                                <p class="text-slate-400 text-sm">Expert aesthetic therapy and styling.</p>
+                            </div>
+                            <div class="bg-pink-500/20 p-3 rounded-2xl text-pink-400">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 pt-4 border-t border-white/5">
+                            <span class="text-2xl font-black font-outfit text-white">₹799</span>
+                            <span class="text-sm text-slate-500 line-through font-medium">₹1,200</span>
+                            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider bg-emerald-500/10 px-2 py-1 rounded-md">Save 33%</span>
+                        </div>
+
+                        <button class="btn-ripple w-full bg-white/10 hover:bg-pink-600 text-white group-hover:text-white font-bold py-4 rounded-2xl text-center transition-all shadow-lg font-outfit focus:outline-none focus:ring-2 focus:ring-pink-500 outline-none">
+                            Book Salon Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: Instant Repairs -->
+                <div class="gsap-reveal flex flex-col bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl service-card transition-all hover:shadow-[0_20px_50px_rgba(20,184,166,0.15)] group cursor-pointer">
+                    <div class="relative h-56 overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-bold z-10">24/7 Available</div>
+                        <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=800" alt="Technician repairing air conditioner" width="800" height="560" loading="lazy" class="w-full h-full object-cover hover-zoom-img">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    </div>
+                    
+                    <div class="p-8 flex flex-col flex-1 space-y-6">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="font-outfit font-extrabold text-2xl text-white group-hover:text-teal-400 transition-colors">Appliance & AC Repair</h3>
+                                <p class="text-slate-400 text-sm">Fixed right, right now by licensed tech.</p>
+                            </div>
+                            <div class="bg-teal-500/20 p-3 rounded-2xl text-teal-400">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-3 pt-4 border-t border-white/5">
+                            <span class="text-2xl font-black font-outfit text-white">₹249</span>
+                            <span class="text-sm text-slate-500 line-through font-medium">₹450</span>
+                            <span class="text-xs font-bold text-emerald-500 uppercase tracking-wider bg-emerald-500/10 px-2 py-1 rounded-md">Save 45%</span>
+                        </div>
+
+                        <button class="btn-ripple w-full bg-white/10 hover:bg-teal-600 text-white group-hover:text-white font-bold py-4 rounded-2xl text-center transition-all shadow-lg font-outfit focus:outline-none focus:ring-2 focus:ring-teal-500 outline-none">
+                            Book Repair Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24 relative overflow-hidden bg-slate-950 border-t border-white/5">
+        <!-- Connecting decorative path for visual desktop flow -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none z-0 overflow-hidden hidden md:block">
+             <svg width="100%" height="100%" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path d="M150 300C250 300 350 150 550 150C750 150 850 450 1050 450" stroke="url(#lineGrad)" stroke-width="4" stroke-dasharray="15 15" />
+                 <defs>
+                     <linearGradient id="lineGrad" x1="0" y1="0" x2="1200" y2="600" gradientUnits="userSpaceOnUse">
+                         <stop stop-color="#4f46e5" />
+                         <stop offset="0.5" stop-color="#ec4899" />
+                         <stop offset="1" stop-color="#14b8a6" />
+                     </linearGradient>
+                 </defs>
+             </svg>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <h2 class="gsap-reveal font-outfit font-black text-4xl md:text-5xl text-white tracking-tight">
+                    Your Dream Space in <span class="text-gradient-cool">3 Simple Steps</span>
+                </h2>
+                <p class="gsap-reveal text-slate-400 text-lg">
+                    Effortless, fully digital workflow designed for modern urban lifestyles.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto relative">
+                
+                <!-- Step 1 -->
+                <div class="gsap-reveal text-center space-y-6 flex flex-col items-center group">
+                    <div class="h-24 w-24 bg-gradient-to-br from-primary-500 to-primary-700 rounded-[2rem] flex items-center justify-center text-white font-outfit font-black text-3xl shadow-2xl shadow-primary-900/40 border-4 border-dark-950 transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-6">
+                        01
+                    </div>
+                    <div class="h-40 w-40 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
+                        <div class="absolute inset-4 bg-primary-600/10 rounded-full animate-pulse"></div>
+                        <svg class="h-16 w-16 text-primary-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                    </div>
+                    <div class="space-y-2 px-4">
+                        <h3 class="font-outfit font-bold text-2xl text-white">Choose Service</h3>
+                        <p class="text-slate-400">Explore dynamic catalogs of specialized, highly detailed, and fully customized home offerings.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="gsap-reveal text-center space-y-6 flex flex-col items-center group">
+                    <div class="h-24 w-24 bg-gradient-to-br from-pink-500 to-pink-700 rounded-[2rem] flex items-center justify-center text-white font-outfit font-black text-3xl shadow-2xl shadow-pink-900/40 border-4 border-dark-950 transition-transform duration-500 group-hover:-translate-y-2 group-hover:-rotate-6">
+                        02
+                    </div>
+                    <div class="h-40 w-40 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
+                        <div class="absolute inset-4 bg-pink-600/10 rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+                        <svg class="h-16 w-16 text-pink-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="space-y-2 px-4">
+                        <h3 class="font-outfit font-bold text-2xl text-white">Book & Schedule</h3>
+                        <p class="text-slate-400">Choose exactly when you want professionals at your location with fixed, transparent pricing.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="gsap-reveal text-center space-y-6 flex flex-col items-center group">
+                    <div class="h-24 w-24 bg-gradient-to-br from-teal-500 to-teal-700 rounded-[2rem] flex items-center justify-center text-white font-outfit font-black text-3xl shadow-2xl shadow-teal-900/40 border-4 border-dark-950 transition-transform duration-500 group-hover:-translate-y-2 group-hover:rotate-6">
+                        03
+                    </div>
+                    <div class="h-40 w-40 rounded-full bg-white/5 border border-white/10 flex items-center justify-center relative">
+                        <div class="absolute inset-4 bg-teal-600/10 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+                        <svg class="h-16 w-16 text-teal-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="space-y-2 px-4">
+                        <h3 class="font-outfit font-bold text-2xl text-white">Sit Back & Relax</h3>
+                        <p class="text-slate-400">Our professional handles the work with unmatched quality while you focus on what really matters.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section with Parallax Background -->
+    <section id="testimonials" class="py-28 relative overflow-hidden bg-dark-900/50">
+        <!-- Parallax Background Image with custom logic applied in JS -->
+        <div id="parallax-bg" class="absolute inset-0 opacity-5 pointer-events-none z-0 scale-110" style="background-image: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center; transform-origin: top;"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
+                <h2 class="gsap-reveal font-outfit font-black text-4xl md:text-5xl text-white tracking-tight">
+                    What Our <span class="text-gradient-vibrant">Delighted Clients</span> Say
+                </h2>
+                <p class="gsap-reveal text-slate-400 text-lg">
+                    Hear the unfiltered experiences of thousands of families enjoying cleaner, better homes.
+                </p>
+            </div>
+
+            <!-- Interactive Cards Slider/Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Card 1 -->
+                <div class="gsap-reveal bg-white/5 border border-white/10 rounded-[2rem] p-8 space-y-6 backdrop-blur-sm relative hover:bg-white/10 transition-colors">
+                    <!-- Star Rating -->
+                    <div class="flex space-x-1 text-accent-amber">
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    
+                    <!-- Review Text -->
+                    <p class="text-slate-300 italic leading-relaxed">
+                        "I booked their Deep Cleaning package for my new apartment. The crew arrived exactly at 9 AM as promised. Not only was their behavior impeccably professional, but the attention to detail was unmatched. Reclaiming my weekend felt so good!"
+                    </p>
+                    
+                    <!-- Author info -->
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/5">
+                        <div class="h-12 w-12 rounded-full bg-primary-600/20 border border-primary-500/30 flex items-center justify-center font-outfit font-bold text-primary-400">
+                            PK
+                        </div>
+                        <div>
+                            <h4 class="font-outfit font-bold text-white">Priya Kapoor</h4>
+                            <p class="text-xs text-slate-400">Whitefield, Bengaluru</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="gsap-reveal bg-white/5 border border-white/10 rounded-[2rem] p-8 space-y-6 backdrop-blur-sm relative hover:bg-white/10 transition-colors">
+                    <!-- Star Rating -->
+                    <div class="flex space-x-1 text-accent-amber">
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    
+                    <!-- Review Text -->
+                    <p class="text-slate-300 italic leading-relaxed">
+                        "AC stopped working during absolute peak summer. Called OSMP Services and they deployed an engineer within 45 minutes. He found the exact wiring short, fixed it permanently, and didn't overcharge. Fast, honest, and reliable service."
+                    </p>
+                    
+                    <!-- Author info -->
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/5">
+                        <div class="h-12 w-12 rounded-full bg-teal-600/20 border border-teal-500/30 flex items-center justify-center font-outfit font-bold text-teal-400">
+                            RV
+                        </div>
+                        <div>
+                            <h4 class="font-outfit font-bold text-white">Rahul Varma</h4>
+                            <p class="text-xs text-slate-400">Gachibowli, Hyderabad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="gsap-reveal bg-white/5 border border-white/10 rounded-[2rem] p-8 space-y-6 backdrop-blur-sm relative hover:bg-white/10 transition-colors">
+                    <!-- Star Rating -->
+                    <div class="flex space-x-1 text-accent-amber">
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="h-5 w-5 fill-current opacity-30" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    
+                    <!-- Review Text -->
+                    <p class="text-slate-300 italic leading-relaxed">
+                        "Booked the premium pedicure and facial at home. Truly relaxing experience. The professional came equipped with high-end sterilized tools and premium organic brands. It's exactly like a luxury spa, right in your living room!"
+                    </p>
+                    
+                    <!-- Author info -->
+                    <div class="flex items-center space-x-4 pt-4 border-t border-white/5">
+                        <div class="h-12 w-12 rounded-full bg-pink-600/20 border border-pink-500/30 flex items-center justify-center font-outfit font-bold text-pink-400">
+                            SC
+                        </div>
+                        <div>
+                            <h4 class="font-outfit font-bold text-white">Sneha Chaudhury</h4>
+                            <p class="text-xs text-slate-400">OMR, Chennai</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Footer -->
+    <footer class="bg-slate-950 pt-16 pb-12 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/5">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="h-8 w-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg text-white font-black text-base">O</div>
+                        <span class="font-outfit font-black text-lg tracking-tight text-white">OSMP <span class="text-primary-500 font-medium">Services</span></span>
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">Premium, reliable home services delivered by fully vetted, certified, and punctual professionals.</p>
+                </div>
+                <div>
+                    <h5 class="font-outfit font-bold text-white mb-4 uppercase tracking-wider text-xs">Our Services</h5>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Deep Cleaning</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Salon At Home</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">AC & Appliance Repair</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Plumbing & Electrical</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-outfit font-bold text-white mb-4 uppercase tracking-wider text-xs">Trust Center</h5>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Vetting Process</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Safety Guarantee</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-outfit font-bold text-white mb-4 uppercase tracking-wider text-xs">Contact</h5>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li class="flex items-center space-x-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2c.08.314-.05.644-.252.866l-1.29 1.293a13.047 13.047 0 006.18 6.18l1.293-1.29c.222-.203.552-.333.866-.252l2.2.547a1 1 0 01.725.941V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg><span>1800-123-OSMP</span></li>
+                        <li class="flex items-center space-x-2"><svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><span>support@osmp-services.com</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center justify-between pt-8 text-xs text-slate-500 space-y-4 sm:space-y-0">
+                <p>&copy; 2026 OSMP Services Private Limited. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PERSISTENT FLOATING BANNER: "Emergency Repairs? Call Us Now!" -->
+    <div id="emergency-banner" class="fixed bottom-6 right-6 z-40 flex flex-col md:flex-row items-center bg-gradient-to-r from-rose-600 to-red-700 text-white p-4 md:p-5 rounded-3xl shadow-[0_15px_40px_rgba(220,38,38,0.4)] border border-white/20 max-w-md transform translate-y-32 opacity-0 pointer-events-none transition-all duration-700 ease-out">
+        <div class="flex items-center space-x-4 mb-3 md:mb-0 md:mr-6">
+            <div class="flex-shrink-0 h-12 w-12 rounded-2xl bg-white/20 flex items-center justify-center relative animate-pulse">
+                <svg class="h-6 w-6 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <div>
+                <h4 class="font-outfit font-bold text-lg leading-tight">Emergency Repairs?</h4>
+                <p class="text-xs text-white/90 font-medium">24/7 on-demand technicians dispatched instantly!</p>
+            </div>
+        </div>
+        <a href="tel:18001236767" class="btn-ripple flex-shrink-0 w-full md:w-auto px-6 py-3 bg-white text-red-600 font-bold font-outfit rounded-xl text-center transition-transform hover:scale-105 shadow-lg shadow-black/20 text-sm outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white whitespace-nowrap">
+            Call 1800-123-OSMP
+        </a>
+        <!-- Small dismiss button -->
+        <button onclick="document.getElementById('emergency-banner').remove()" class="absolute top-2 right-2 text-white/50 hover:text-white outline-none p-1" aria-label="Dismiss Banner">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+
+    <!-- ==========================================
+         LOGIC & ANIMATION CONTROLS (GSAP, THREE.JS)
+         ========================================== -->
+    <script>
+        // Ensure script acts only after DOM content has finished setting up
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // 1. DISMISS LOADER ONCE PAGE IS PARSED & RENDERED
+            window.addEventListener("load", () => {
+                const loader = document.getElementById("page-loader");
+                loader.style.opacity = 0;
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    
+                    // Trigger Hero Entrance Animations
+                    triggerHeroIntro();
+                }, 600);
+            });
+
+            // 2. INJECT GSAP REGISTRATION
+            gsap.registerPlugin(ScrollTrigger);
+
+            // 3. RIPPLE CLICK EFFECT MANAGER
+            document.querySelectorAll(".btn-ripple").forEach(btn => {
+                btn.addEventListener("click", function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const rip = document.createElement("span");
+                    rip.classList.add("ripple");
+                    rip.style.left = `${x}px`;
+                    rip.style.top = `${y}px`;
+                    
+                    this.appendChild(rip);
+                    setTimeout(() => rip.remove(), 600);
+                });
+            });
+
+            // 4. NAVBAR TRANSPARENCY TRANSITION ON SCROLL
+            const navbar = document.getElementById("main-nav");
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+
+            // 5. PERSISTENT EMERGENCY BANNER TRIGGER
+            // Appear after 2500ms delay automatically or upon scrolling 300px down
+            const showBanner = () => {
+                const banner = document.getElementById("emergency-banner");
+                if (banner) {
+                    banner.style.opacity = "1";
+                    banner.style.transform = "translateY(0)";
+                    banner.style.pointerEvents = "auto";
+                }
+            };
+            
+            setTimeout(showBanner, 2500);
+
+            // 6. GEOLOCATION PERSIGNALIZATION ENGINE (PERMISSION-BASED)
+            const geoBadge = document.getElementById("geo-badge");
+            const geoBadgeText = document.getElementById("geo-badge-text");
+            const geoMessage = document.getElementById("geo-personalized-msg");
+
+            const mockDetectLocation = () => {
+                // Default fallback message in case location access denied
+                geoMessage.innerHTML = `<svg class="h-5 w-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> <span>Top-rated plumbers near you are ready to help.</span>`;
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        // In production, we use a free reverse geocoding API. 
+                        // Here, we fetch the city using high-precision free data APIs
+                        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${pos.coords.latitude}&lon=${pos.coords.longitude}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const city = data.address.city || data.address.town || data.address.suburb || "your area";
+                            
+                            // Inject into main dynamic badge
+                            geoBadge.classList.remove("hidden");
+                            geoBadge.classList.add("flex");
+                            geoBadgeText.textContent = `${city}`;
+                            
+                            // Inject into hero section messaging
+                            geoMessage.innerHTML = `
+                                <svg class="h-5 w-5 flex-shrink-0 animate-pulse text-accent-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                                <span>Top-rated experts in <span class="underline decoration-2 decoration-accent-teal underline-offset-2 font-extrabold text-white">${city}</span> are ready to help you right now.</span>
+                            `;
+                        })
+                        .catch(() => mockDetectLocation());
+                    },
+                    () => { mockDetectLocation(); }
+                );
+            } else {
+                mockDetectLocation();
+            }
+
+            // 7. THREE.JS LIGHTWEIGHT ROTATING CRYSTALLINE SHIELD
+            const setupThreeJsHero = () => {
+                const container = document.getElementById("threejs-canvas-container");
+                if(!container) return;
+
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                // Scene
+                const scene = new THREE.Scene();
+
+                // Camera
+                const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+                camera.position.z = 25;
+
+                // Renderer
+                const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                renderer.setSize(width, height);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                container.appendChild(renderer.domElement);
+
+                // Geometry Creation (A complex low poly shield-like object using Octahedron)
+                const geometry = new THREE.OctahedronGeometry(6, 1);
+                
+                // Custom low-poly wireframe material + flat shade material combination
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0x4f46e5,
+                    flatShading: true,
+                    transparent: true,
+                    opacity: 0.25,
+                    shininess: 80
+                });
+                
+                const wireMat = new THREE.MeshBasicMaterial({
+                    color: 0x14b8a6,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.35
+                });
+
+                const mesh = new THREE.Mesh(geometry, material);
+                const wireframe = new THREE.Mesh(geometry, wireMat);
+                
+                // Group
+                const group = new THREE.Group();
+                group.add(mesh);
+                group.add(wireframe);
+                
+                // Adjust positioning closer to standard screen right center
+                group.position.x = 3;
+                scene.add(group);
+
+                // Lights
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1);
+                mainLight.position.set(10, 10, 10);
+                scene.add(mainLight);
+
+                const rimLight = new THREE.DirectionalLight(0xec4899, 1.5);
+                rimLight.position.set(-10, -10, 10);
+                scene.add(rimLight);
+
+                const ambientLight = new THREE.AmbientLight(0x312e81, 0.5);
+                scene.add(ambientLight);
+
+                // Mouse tracking animation variable
+                let targetX = 0;
+                let targetY = 0;
+                
+                window.addEventListener('mousemove', (event) => {
+                    targetX = (event.clientX / window.innerWidth - 0.5) * 0.5;
+                    targetY = (event.clientY / window.innerHeight - 0.5) * 0.5;
+                });
+
+                // Animation loop
+                const animate = () => {
+                    requestAnimationFrame(animate);
+                    
+                    // Rotate naturally
+                    group.rotation.y += 0.004;
+                    group.rotation.x += 0.002;
+                    
+                    // React to mouse position smoothly
+                    group.rotation.y += (targetX - group.rotation.y * 0.05) * 0.05;
+                    group.rotation.x += (targetY - group.rotation.x * 0.05) * 0.05;
+                    
+                    renderer.render(scene, camera);
+                };
+                
+                animate();
+
+                // Handle Resize
+                window.addEventListener('resize', () => {
+                    const newW = container.clientWidth;
+                    const newH = container.clientHeight;
+                    
+                    camera.aspect = newW / newH;
+                    camera.updateProjectionMatrix();
+                    
+                    renderer.setSize(newW, newH);
+                });
+            };
+            
+            // Kick off 3D element Setup
+            setupThreeJsHero();
+
+            // 8. GSAP SPLIT-TEXT EFFECT & INTRO TRIGGERS
+            const triggerHeroIntro = () => {
+                // Emulate split text effect by targetting words/lines and executing fades
+                const headline = document.getElementById("hero-headline");
+                const text = headline.innerHTML;
+                
+                // Build Timeline for coordinated elements entrance
+                const tl = gsap.timeline({
+                    defaults: {
+                        duration: 0.9,
+                        ease: "power3.out"
+                    }
+                });
+                
+                tl.fromTo("#hero-headline", {
+                    opacity: 0,
+                    y: 40
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.2
+                });
+                
+                tl.fromTo(".gsap-hero-reveal", {
+                    opacity: 0,
+                    y: 30
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    stagger: 0.2
+                }, "-=0.8");
+            };
+
+            // 9. SCROLL-TRIGGERED FADE-UP & STAGGER ANIMATIONS FOR REMAINDER SECTIONS
+            // We detect user preference and disable if 'prefers-reduced-motion' is true
+            if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                
+                // Generic Reveal class
+                const elementsToReveal = document.querySelectorAll(".gsap-reveal");
+                
+                elementsToReveal.forEach((elem) => {
+                    gsap.fromTo(elem, {
+                        opacity: 0,
+                        y: 40
+                    }, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: "top 85%", // starts when element top is 85% down the screen
+                            toggleActions: "play none none none" // plays once
+                        }
+                    });
+                });
+
+                // Testimonial Section Parallax Effect
+                gsap.to("#parallax-bg", {
+                    yPercent: 20, // Move the background by 20 percent on scroll
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#testimonials",
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: true // Smooth scrub linked to the scroll position
+                    }
+                });
+            } else {
+                // Fallback for prefers-reduced-motion (immediately render)
+                document.querySelectorAll(".gsap-reveal").forEach(el => el.style.opacity = 1);
+            }
+        });
+    </script>
+</body>
+</html>
