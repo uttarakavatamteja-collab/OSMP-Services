@@ -5,9 +5,7 @@ import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import { BottomNav } from "@/components/shared/BottomNav";
 import { Toaster } from "@/components/ui/sonner";
-
-import { MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FloatingChatbot } from "@/components/shared/FloatingChatbot";
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 const outfit = Outfit({ subsets: ["latin"], variable: '--font-outfit' });
@@ -33,12 +31,8 @@ export default function RootLayout({
         <BottomNav />
         <Toaster />
         
-        {/* Floating Chat Support */}
-        <div className="fixed bottom-20 right-4 z-50 md:bottom-8 md:right-8">
-           <Button size="icon" className="h-14 w-14 rounded-full gradient-primary shadow-xl shadow-primary/20 hover:scale-110 transition-transform">
-              <MessageCircle className="h-6 w-6 text-white" />
-           </Button>
-        </div>
+        {/* Interactive Floating Chat Support & Conversational Engine */}
+        <FloatingChatbot />
       </body>
     </html>
   );
