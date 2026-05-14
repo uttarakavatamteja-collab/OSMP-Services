@@ -462,6 +462,12 @@
                 <button onclick="sendMockMessage('What is your refund policy?')" class="bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-slate-300 px-2 py-1 rounded-full transition-colors cursor-pointer">🛡️ Refund Policy</button>
                 <button onclick="sendMockMessage('How can I book deep cleaning?')" class="bg-white/5 hover:bg-white/10 border border-white/10 text-[10px] text-slate-300 px-2 py-1 rounded-full transition-colors cursor-pointer">🏠 Book Clean</button>
             </div>
+
+            <!-- Interactive Text Input Bar -->
+            <div class="p-3 bg-slate-950 border-t border-white/10 flex items-center space-x-2">
+                <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 text-xs bg-white/5 border border-white/10 text-white rounded-full px-4 py-2 outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500" onkeypress="if(event.key === 'Enter') submitChatInput()">
+                <button onclick="submitChatInput()" aria-label="Send Message" class="h-8 w-8 flex-shrink-0 bg-[#075E54] hover:bg-emerald-600 text-white rounded-full flex items-center justify-center shadow transition-all outline-none"><svg class="h-4 w-4 transform rotate-45 -translate-x-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg></button>
+            </div>
         </div>
     </div>
 
@@ -704,6 +710,17 @@
         function openChat() {
             const win = document.getElementById("chat-window");
             win.classList.remove("opacity-0", "translate-y-10", "pointer-events-none");
+            // Set focus to input when opened
+            setTimeout(() => document.getElementById("chat-input").focus(), 300);
+        }
+
+        function submitChatInput() {
+            const input = document.getElementById("chat-input");
+            const msg = input.value.trim();
+            if (msg.length > 0) {
+                sendMockMessage(msg);
+                input.value = "";
+            }
         }
 
         function sendMockMessage(text) {
@@ -723,20 +740,28 @@
             log.appendChild(tInd);
             log.scrollTop = log.scrollHeight;
 
-            // Simulated response payload (Mock AI GPT logic)
+            // Simulated response payload (Mock AI GPT logic with keywords fallback)
             setTimeout(() => {
                 tInd.remove();
-                let reply = "Processing your query...";
-                if(text.includes("cost")) reply = "Our AC diagnostic fee is ₹249. Any extra gas charging or replacements use fixed rate cards. I can initialize booking for you!";
-                else if(text.includes("refund")) reply = "If we can't resolve the core issue within 48 hours, a full refund is instantly triggered back to your original payment source!";
-                else if(text.includes("book")) reply = "Deep cleaning schedules are filling fast! Please enter your area code to view active slots.";
+                const lower = text.toLowerCase();
+                let reply = "That's a great inquiry! As a simulated GPT assistant, I analyzed your text. Our premium network is completely fully insured and vetted. To explore further details, please tap our quick action buttons above!";
+                
+                if (lower.includes("cost") || lower.includes("price") || lower.includes("charge") || lower.includes("rate") || lower.includes("money")) {
+                    reply = "Our AC/Appliance base inspections start at fixed diagnostics (₹249). Spare parts needed are applied through standard rate cards inside the dashboard.";
+                } else if (lower.includes("refund") || lower.includes("guarantee") || lower.includes("bad") || lower.includes("policy")) {
+                    reply = "Our 100% Satisfaction warranty covers free redo bookings. If issues remain unresolved within 48 hours, we issue a bank refund instantly.";
+                } else if (lower.includes("book") || lower.includes("clean") || lower.includes("order") || lower.includes("service")) {
+                    reply = "Booking is fast! Select your service on the grid or let me know which PIN code you'd like available timeslots checked for.";
+                } else if (lower.includes("hi") || lower.includes("hello") || lower.includes("hey")) {
+                    reply = "Hi there! I am the OSMP virtual assistant. How can I help you reclaim your time today? Try asking about costs or bookings!";
+                }
 
                 const aBubble = document.createElement("div");
                 aBubble.className = "flex items-start space-x-2";
                 aBubble.innerHTML = `<div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-tl-none max-w-[85%] leading-relaxed">${reply}</div>`;
                 log.appendChild(aBubble);
                 log.scrollTop = log.scrollHeight;
-            }, 1500);
+            }, 1200);
         }
 
         // C. LIVE GPS TRACKING SIMULATOR (Leaflet)
