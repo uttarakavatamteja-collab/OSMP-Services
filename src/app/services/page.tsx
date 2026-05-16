@@ -285,8 +285,7 @@ const categoryFeatures = [
         items: [
           { name: "Chimney", desc: "Filter cleaning", icon: "🍳" },
           { name: "Microwave", desc: "Heating restoration", icon: "🍲" },
-          { name: "Stove", desc: "Burner repair", icon: "🔥" },
-          { name: "Laptop", desc: "OS & hardware fix", icon: "💻" }
+          { name: "Stove", desc: "Burner repair", icon: "🔥" }
         ]
       }
     ]
@@ -356,6 +355,15 @@ const categoryFeatures = [
           { name: "Keyboard & Battery", desc: "Part replacement", icon: "🔋" },
           { name: "OS & Software Install", desc: "Setup & Antivirus", icon: "💿" }
         ]
+      },
+      {
+        title: "Other Services",
+        items: [
+          { name: "RAM Upgrade", desc: "Memory expansion", icon: "💾" },
+          { name: "Storage Upgrade", desc: "SSD installation", icon: "💽" },
+          { name: "Motherboard Repair", desc: "Chip-level fix", icon: "⚙️" },
+          { name: "Data Recovery", desc: "Lost files restore", icon: "🔍" }
+        ]
       }
     ]
   },
@@ -371,6 +379,15 @@ const categoryFeatures = [
           { name: "Battery Install", desc: "New energy fixed", icon: "🔋" },
           { name: "Port Repair", desc: "Charging fixes", icon: "🔌" },
           { name: "Software Repair", desc: "OS & Backup", icon: "☁️" }
+        ]
+      },
+      {
+        title: "Other Services",
+        items: [
+          { name: "Camera Repair", desc: "Lens replacement", icon: "📷" },
+          { name: "Speaker/Mic Fix", desc: "Audio issues", icon: "🔊" },
+          { name: "Water Damage", desc: "Liquid cleanup", icon: "💧" },
+          { name: "Back Glass Fix", desc: "Rear panel replace", icon: "📱" }
         ]
       }
     ]
